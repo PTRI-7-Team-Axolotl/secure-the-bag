@@ -1,19 +1,33 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Navigate } from 'react-router-dom'
+import JobInfo from './JobInfo.jsx'
 
-function User () {
+function User (props) {
     const [error, setError] = useState(null)
     const [isLoaded, setIsLoaded] = useState(false)
-    const[user, setUser] = useState({})
+    const[user, setUser] = useState({
+        username:   "test1",
+        email:      "testing@gmail.com",
+        jobs:       [{
+            company:    "testing company",
+            job:        "software engineer",
+            deadline:   "June 17, 2023",
+            postUrl:      "www.randomwebsite",
+            salary:         "$150,000",
+            location:       "remote",
+            description:    "description of job here",
+            dateApplied:    "put in the date here",
+            interviewDate: "interview date",
+            notes:          "notes",
+            result:         "result"
+        }]
+    })
     
-    if (error) {
-        return <div>Error: {error.message}</div>;
-    } else if (!isLoaded) {
-        return <div>Loading...</div>;
-    } else {
-        return <div>This is the user component</div>
-    
-    }
+  
+   return (<div>
+    <JobInfo user={user.jobs}/>
+   </div>)
+   
     
 } 
     

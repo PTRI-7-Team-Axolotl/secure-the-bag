@@ -1,14 +1,10 @@
 
 import React, { useState, useEffect} from 'react';
 
-function JobInfo() {
-    
-return <div>This is the JobInfo</div>
-
-}
-
-
-
+function JobInfo(props) {
+    const array = props.user.jobs
+return <div>{props.user.username}</div>
+   }
 
 
 
