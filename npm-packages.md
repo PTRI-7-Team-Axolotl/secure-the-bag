@@ -24,7 +24,7 @@ axios - done
 pg - done
 react-router-dom - done
 react-dnd - done
-
+bcryptjs
 prop-types?
 dotenv?
 
