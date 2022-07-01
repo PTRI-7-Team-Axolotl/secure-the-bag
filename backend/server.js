@@ -1,10 +1,15 @@
 const express = require('express');
-const app = express()
-const PORT = 3000;
+const app = express();
+const path = require('path');
+require('dotenv').config();
 
-console.log('im inside server.js')
-app.use('/', express.static('../public/index.html'))
+// Serve static files
+app.use('/', express.static(path.resolve(__dirname, '../build')));
 
-app.listen(PORT, () => {
-    console.log("server is running!");
+// Serve index
+app.get('/*', (req, res) => res.status(200).sendFile(path.resolve(__dirname, '../build/index.html')));
+
+// Start Server
+app.listen(process.env.PORT, () => {
+    console.log(`server is running on port ${process.env.PORT}`);
   });
