@@ -57,3 +57,5 @@ authController.verifyUser = async (req, res, next) => {
     });
   }
 };
+
+module.exports = authController;

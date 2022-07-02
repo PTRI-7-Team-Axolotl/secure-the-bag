@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+require("dotenv").config();
 
 module.exports = { 
     mode: process.env.NODE_ENV,
@@ -36,8 +37,9 @@ module.exports = {
             directory: path.resolve(__dirname, './public')
         },
         proxy: {
-            '/api': 'http://localhost:3000'
+            '/': `http://localhost:${process.env.PORT}`
         },
+        // devServer always defaults to 8080
         // host: 'localhost',
         // port: 8080
 
