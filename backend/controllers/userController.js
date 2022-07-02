@@ -3,8 +3,8 @@ const db = require('../models/userModel');
 const userController = {};
 
 userController.signup = async (req, res, next) => {
-    const { email, password } = req.body;
-    const params = [email, password]
+    const { email} = req.body;
+    const params = [email, res.locals.password]
     // this query mush 1.) send a new user to the DB, 2.) bring back the _id and save it to res.locals._id
     const queryType = `INSERT INTO users (email, password) VALUES ($1, $2) RETURNING user_id`
     try{

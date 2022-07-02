@@ -38,7 +38,7 @@ authController.verifyUser = async (req, res, next) => {
     password
   } = req.body;
   if (email && password) {
-    const query = 'SELECT _id, password FROM users WHERE email=$1';
+    const query = 'SELECT user_id, password FROM users WHERE email=$1';
     const params = [email];
     try {
       const results = await db.query(query, params);
@@ -48,7 +48,7 @@ authController.verifyUser = async (req, res, next) => {
           const match = await bcrypt.compare(password, results.rows[0].password);
           if (match) {
             console.log('User verified!!');
-            res.locals.verified_id = results.rows[0]._id;
+            res.locals.verified_id = results.rows[0].user_id;
             next();
           } else {
             next({
