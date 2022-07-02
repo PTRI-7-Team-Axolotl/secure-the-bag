@@ -18,7 +18,7 @@ userController.signup = async (req, res, next) => {
 
 userController.login = async (req, res, next) => {
     const { email, password } = req.body;
-    const params = [email, password]
+    const params = [email,ßpassword]
     const queryType = `INSERT INTO users (email, password) VALUES ($1, $2)`
     try{
         const values = await db.query(queryType, params)
