@@ -5,8 +5,10 @@ module.exports = {
     mode: process.env.NODE_ENV,
     entry: "./src/index.js",
     output: {
-        path: path.resolve(__dirname, './build'),
+        path: path.resolve(__dirname, 'build'),
+        publicPath: "/",
         filename: "bundle.js"
+        
     },
     module: {
         rules: [
@@ -23,7 +25,7 @@ module.exports = {
             {
                 test: /.(css|scss)$/,
                 exclude: /node_modules/,
-                use: ['style-loader', 'css-loader', 'sass'],
+                use: ['style-loader', 'css-loader'],
             }
         ],
     },
@@ -42,7 +44,7 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: './public/index.html'
+            template: './src/index.html'
         })
     ]
 }
