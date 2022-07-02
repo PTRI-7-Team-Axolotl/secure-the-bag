@@ -1,6 +1,35 @@
 const db = require('../models/userModel');
 const bcrypt = require('bcryptjs');
+const saltFactor = parseInt(process.env.SALT_WORK_FACTOR);
+
 const authController = {};
+
+authController.encryptPassword = async (req, res, next) => {
+  const { password } = req.body;
+  
+  if (password) {
+    console.log('Encrypting password...');
+    try {
+      const encryptedPW = await bcrypt.hash(password, saltFactor);
+      res.locals.password = encryptedPW;
+      next();
+    } catch (error) {
+      next({
+        log: 'Error in authController.encryptPassword: password hashing error - ' + JSON.stringify(err),
+        status: 500,
+        message: 'Could not encrypt password'
+      });
+    }
+  } else {
+    // Error message if no password entered
+    next({
+      log: 'Error in authController.encryptPassword: No password specified',
+      status: 400,
+      message: 'No password specified'
+    });
+  }
+
+}
 
 authController.verifyUser = async (req, res, next) => {
   console.log('Verifying user credentials...');
