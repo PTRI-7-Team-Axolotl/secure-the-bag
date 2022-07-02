@@ -4,8 +4,11 @@ const cookieParser = require('cookie-parser');
 const app = express();
 const path = require('path');
 const PORT = process.env.PORT;
-const userRouter = require('./routes/userRoutes');
-const authRouter = require('./controllers/authController');
+// const userRouter = require('./routes/userRoutes');
+const authRouter = require('./routes/authRoutes');
+
+console.log('im inside server.js!!')
+
 
 // Parsers
 app.use(express.json());
@@ -23,7 +26,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // Routes
-app.use('/users', userRouter);
+// app.use('/users', userRouter);
 app.use('/auth', authRouter);
 
 // 404 Catch-All
