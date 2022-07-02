@@ -27,38 +27,6 @@ function Signup() {
     
   );
 }
-//   const [email, setEmail] = useState(null);
-//   const [password, setPassword] = useState(null);
-
-//   function onClick() {
-//     const emailInput = document.querySelector('#email').value;
-//     const passwordInput = document.querySelector('#password').value
-    
-//     setEmail(emailInput);
-//     setPassword(passwordInput);
-//   }
-
-//   useEffect(() => {
-//     console.log('Email: -->', email)
-//     console.log('Password: -->', password)
-//   })
-
-
-//   return (
-//     <div className="signup" style={styles.container}>
-//       <h1 style={styles.h1}>Signup</h1>
-//       <form action="" style={styles.form}>
-//         <label for="email" style={styles.labels}>Email:</label>
-//         <input type="text" id="email" name="email" style={styles.inputs}/>
-//         <label for="password" style={styles.labels}>Password:</label>
-//         <input type="text" id="password" name="password" style={styles.inputs}/>
-//         <button onClick={onClick}>Signup</button>
-//       </form>
-//       <p>Already a user?</p>
-//       <Link to='/login' element={Login}>Login</Link>
-//     </div>
-//   );
-// }
 
 const styles = {
   container: {

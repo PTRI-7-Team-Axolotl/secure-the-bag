@@ -11,8 +11,6 @@ root.render(
     <React.StrictMode>
       <Routes>
         <Route path='/' element={<App />}>
-          <Route path='login' element={<Login />} />
-          <Route path='signup' element={<Signup />} />
           <Route path="*" 
                   element={
                     <main style={{ padding: "1rem" }}>
@@ -21,6 +19,8 @@ root.render(
                   }
           />
         </Route>
+        <Route path='login' element={<Login />} />
+        <Route path='signup' element={<Signup />} />
       </Routes>
     </React.StrictMode>
   </BrowserRouter>

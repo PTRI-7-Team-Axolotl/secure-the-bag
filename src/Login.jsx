@@ -26,20 +26,6 @@ function Login() {
   </div>
     
   );
-  // return (
-  //   <div className="login" style={styles.container}>
-  //     <h1 style={styles.h1}>Login</h1>
-  //     <form action="" style={styles.form}>
-  //       <label for="email" style={styles.labels}>Email:</label>
-  //       <input type="text" id="email" name="email" style={styles.inputs}/>
-  //       <label for="password" style={styles.labels}>Password:</label>
-  //       <input type="text" id="password" name="password" style={styles.inputs} />
-  //       <input type="button" value="Login" />
-  //     </form>
-  //     <p style={{textAlign: 'center'}}>New user?</p>
-  //     <Link to='/signup' element={Signup} >Signup here!</Link>
-  //   </div>
-  // );
 }
 
 const styles = {
