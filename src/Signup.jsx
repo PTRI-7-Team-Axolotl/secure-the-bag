@@ -13,15 +13,16 @@ function Signup() {
   console.log(errors);
   
   return (
-    <div className='signup'>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input type="text" placeholder="Email" {...register("Email", {required: true, pattern: /^\S+@\S+$/i})} />
-        <input type="password" placeholder="Password" {...register("Password", {required: true})} />
+    <div className='signup' style={styles.container}>
+      <h1 style={styles.h1}>Signup</h1>
+      <form onSubmit={handleSubmit(onSubmit)} style={styles.form}>
+        <input type="text" placeholder="Email" {...register("Email", {required: true, pattern: /^\S+@\S+$/i})} style={styles.inputs}/>
+        <input type="password" placeholder="Password" {...register("Password", {required: true})} style={styles.inputs}/>
 
-        <input type="submit" />
+        <input type="submit" value="Sign up"/>
       </form>
-      <p>Already a user?</p>
-      <Link to='/login' element={Login}>Login</Link>
+      <p style={styles.p}>Already a user?</p>
+      <Link to='/login' element={Login} style={{textAlign: 'center', margin: '0 auto', border: '1px red solid'}}>Login</Link>
   </div>
     
   );
@@ -71,11 +72,6 @@ const styles = {
     flexDirection: 'column',
     justifyContent: 'center'
   },
-  labels: {
-    padding: '0.5em',
-    margin: '0.25em auto',
-    width: '15%',
-  },
   inputs: {
     padding: '.24em',
     margin: '1em auto',
@@ -85,8 +81,8 @@ const styles = {
     margin: '1em auto',
     textAlign: 'center'
   },
-  button: {
-    width: 'auto'
+  p: {
+    textAlign: 'center'
   }
 }
 
