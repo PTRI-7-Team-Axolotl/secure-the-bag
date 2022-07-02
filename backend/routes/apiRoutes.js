@@ -9,4 +9,6 @@ router.get('/getjobs', apiController.getJobs, (req, res) => {
     return res.status(200).json(res.locals.jobResults);
 })
 
+module.exports = router;
+
 

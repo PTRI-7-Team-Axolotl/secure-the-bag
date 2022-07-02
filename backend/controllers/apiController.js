@@ -23,3 +23,4 @@ apiController.getJobs = async (req, res, next) => {
       });
 }
 
+module.exports = apiController;

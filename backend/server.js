@@ -6,6 +6,7 @@ const path = require('path');
 const PORT = process.env.PORT;
 const userRouter = require('./routes/userRoutes');
 const authRouter = require('./routes/authRoutes');
+const apiRouter = require('./routes/apiRoutes');
 
 console.log('im inside server.js!!')
 
@@ -28,6 +29,7 @@ if (process.env.NODE_ENV === 'production') {
 // Routes
 app.use('/users', userRouter);
 app.use('/auth', authRouter);
+app.use('/api', apiRouter);
 
 // 404 Catch-All
 app.use('*', (req, res) => res.status(404).send('Not Found'));
