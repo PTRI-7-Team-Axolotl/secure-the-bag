@@ -45,9 +45,7 @@ function JobInfo(props) {
                 <form onSubmit={handleSubmit(onSubmit)} >
                      <input type="text" {...register("title")} defaultValue={job[jobIndex].title} />
                     <input type="submit"/>
-
                 </form>
-           
             </div>
         )
     }
