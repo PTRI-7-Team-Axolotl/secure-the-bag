@@ -10,8 +10,8 @@ function JobInfo(props) {
     
     const onSubmit = data => {
         setIsLoaded(true);
-        setJob([...job, data]);
-        console.log(data);
+        setJob([job[jobIndex].title, data]);
+        console.log('data', data);
         setIsShown(current => !current);
     }
    
@@ -20,7 +20,6 @@ function JobInfo(props) {
     
     let onClick = (e) => {
         e.preventDefault()
-        //let displayJob = e.target.__reactProps$fvcg9ohi4q9.id
         setIsShown(current => !current)
         setJobIndex(Number(e.target.id))
     }
@@ -28,7 +27,7 @@ function JobInfo(props) {
    
 
    const listItems = props.job.map((job, index) => 
-    <div key={index} onClick={onClick} name={index} id={index}>{job.company}</div>
+    <div key={index} onClick={onClick} name={index} id={index}>{job.employer}</div>
    );
 
 

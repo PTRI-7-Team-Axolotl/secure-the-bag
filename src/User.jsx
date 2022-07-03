@@ -10,33 +10,26 @@ function User (props) {
     })
 
     const[jobs, setJobs] = useState(
-             [{
-            company:    "testing company1",
-            title:        "software engineer",
-            deadline:   "June 17, 2023",
-            postUrl:      "www.randomwebsite",
-            salary:         "$150,000",
-            location:       "remote",
-            description:    "description of job here",
-            dateApplied:    "put in the date here",
-            interviewDate: "interview date",
-            notes:          "notes",
-            result:         "result"
+      [{
+        employer: "Google",
+        logo:     "placeholder",
+        title:  'software engineer', 
+        expiration: "June 23, 2022",  
+        application: 'wwww.apply here',
+        salary: '$150,000',
+        city:     "Denver",
+        remote:    'yes',
+        description: "put some words in here",
         }, {
-            company:    "testing company2",
-            title:        "software engineer",
-            deadline:   "June 17, 2023",
-            postUrl:      "www.randomwebsite",
-            salary:         "$150,000",
-            location:       "remote",
-            description:    "description of job here",
-            dateApplied:    "put in the date here",
-            interviewDate: "interview date",
-            notes:          "notes",
-            result:         "result"
-        }, {
-          company: "testing event",
-          title: "testing event"
+          employer: "Google2",
+          logo:     "placeholder2",
+          title:  'software engineer2', 
+          expiration: "June 23, 20222",  
+          application: 'wwww.apply here2',
+          salary: '$150,0002',
+          city:     "Denver2",
+          remote:    'yes2',
+          description: "put some words in here2",
         }]
     )
 
