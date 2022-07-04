@@ -1,21 +1,23 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form'
 
 function JobInfo(props) {
-    const [jobIndex, setJobIndex] = useState(props.jobIndex)
-    const [jobs, setJobs] = useState(props.jobs)
-   
-    
 
-const onSubmit = data => {
- props.onSubmit(data)
-   
-}
-    
+   //react-hook-form hooks
     const { register, handleSubmit, formState: { errors } } = useForm();
     
-
+    //Linking our form submission with State
+    const onSubmit = data => {
+        props.onSubmit(data)
+    }
+    
+//Reloading the user page if closing the Job details
+    const onClick = e => {
+        props.onClose(e)
+    }
+    
+//displaying our data
   return (
             <div>
                 <form onSubmit={handleSubmit(onSubmit)} >
@@ -33,7 +35,8 @@ const onSubmit = data => {
                      <input type="text" {...register("city")} defaultValue={props.jobs[props.jobIndex].city} />
                      <label for="description">Job Description: </label>
                      <input type="text" {...register("description")} defaultValue={props.jobs[props.jobIndex].description} />
-                    <input type="submit"/>
+                    <input type="submit" value="Save"/>
+                    <button onClick={onClick}>Close</button>
                 </form>
             </div>
         )

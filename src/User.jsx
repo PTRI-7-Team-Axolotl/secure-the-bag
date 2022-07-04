@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react'
-import { Navigate } from 'react-router-dom'
-import JobInfo from './JobInfo.jsx'
+import React, { useState } from 'react';
+import JobInfo from './JobInfo.jsx';
 
 function User (props) {
+
+  //Variable to determine whether the user component or JobInfo component is rendered
     const [isShown, setIsShown] = useState(false);
+  //Variable to hold which job was clicked
     const [jobIndex, setJobIndex] = useState(null);
-
-
-
+  //Variable to hold mockstate.  Once we use live data, we will need to set this to an empty array
     const[jobs, setJobs] = useState(
       [{
         employer: "Google",
@@ -32,25 +32,28 @@ function User (props) {
         }]
     )
 
-
+   //onClick Function that activates when a job is clicked
     const onClick = (e) => {
       e.preventDefault()
       setIsShown(current => !current)
       setJobIndex(Number(e.target.id))
+    }
+
+    //onSubmit Function that activates when the form is submitted
+    const onSubmit = data => {
+    setIsShown(current => !current)
+    setJobs([jobs[jobIndex], data])
   }
-
- const onSubmit = data => {
-  setIsShown(current => !current)
-  setJobs([jobs[jobIndex], data])
- }
  
+  const onClose = e => {
+    setIsShown(current => !current)
+  }
+     //Mapping out our jobs to be displayed on the page
+     const listItems = jobs.map((job, index) => 
+     <div key={index} onClick={onClick} name={index} id={index}>{job.employer}</div>
+    );
 
-  const listItems = jobs.map((job, index) => 
-  <div key={index} onClick={onClick} name={index} id={index}>{job.employer}</div>
- );
-
-
- 
+  //Our rendering logic
   if (!isShown) {
       return (
           <div>
@@ -59,7 +62,7 @@ function User (props) {
       )
    } else {
       return (
-    <JobInfo jobs={jobs} onClick={onClick} jobIndex={jobIndex} onSubmit={onSubmit}/>
+    <JobInfo jobs={jobs} onClick={onClick} jobIndex={jobIndex} onSubmit={onSubmit} onClose={onClose}/>
   )
     
 } 
