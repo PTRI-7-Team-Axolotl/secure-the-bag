@@ -10,7 +10,7 @@ function JobInfo(props) {
     
     const onSubmit = data => {
         setIsLoaded(true);
-        setJob([job[jobIndex].title, data]);
+        setJob([job[jobIndex], data]);
         console.log('data', data);
         setIsShown(current => !current);
     }
@@ -42,12 +42,19 @@ function JobInfo(props) {
         return (
             <div>
                 <form onSubmit={handleSubmit(onSubmit)} >
+                    <label for="employer">Company: </label>
                     <input type="text" {...register("employer")} defaultValue={job[jobIndex].employer} />
+                    <label for="title">Job Title: </label>
                      <input type="text" {...register("title")} defaultValue={job[jobIndex].title} />
+                     <label for="expiration">Application Closes: </label>
                      <input type="text" {...register("expiration")} defaultValue={job[jobIndex].expiration} />
+                     <label for="application">Application Link: </label>
                      <input type="text" {...register("application")} defaultValue={job[jobIndex].application} />
+                     <label for="salary">Max Salary: </label>
                      <input type="text" {...register("salary")} defaultValue={job[jobIndex].salary} />
+                     <label for="city">City: </label>
                      <input type="text" {...register("city")} defaultValue={job[jobIndex].city} />
+                     <label for="description">Job Description: </label>
                      <input type="text" {...register("description")} defaultValue={job[jobIndex].description} />
                     <input type="submit"/>
                 </form>

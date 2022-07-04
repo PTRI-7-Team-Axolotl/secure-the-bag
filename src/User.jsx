@@ -34,7 +34,7 @@ function User (props) {
     )
 
   return (
-    <JobInfo job={jobs} isLoaded={isLoaded}/>
+    <JobInfo job={jobs} />
   )
     
 } 
