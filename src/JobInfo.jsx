@@ -42,7 +42,13 @@ function JobInfo(props) {
         return (
             <div>
                 <form onSubmit={handleSubmit(onSubmit)} >
+                    <input type="text" {...register("employer")} defaultValue={job[jobIndex].employer} />
                      <input type="text" {...register("title")} defaultValue={job[jobIndex].title} />
+                     <input type="text" {...register("expiration")} defaultValue={job[jobIndex].expiration} />
+                     <input type="text" {...register("application")} defaultValue={job[jobIndex].application} />
+                     <input type="text" {...register("salary")} defaultValue={job[jobIndex].salary} />
+                     <input type="text" {...register("city")} defaultValue={job[jobIndex].city} />
+                     <input type="text" {...register("description")} defaultValue={job[jobIndex].description} />
                     <input type="submit"/>
                 </form>
             </div>
