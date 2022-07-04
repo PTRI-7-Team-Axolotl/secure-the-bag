@@ -9,8 +9,8 @@ function JobInfo(props) {
     
 
 const onSubmit = data => {
-    setJobs([jobs[jobIndex], data])
-    console.log(data)
+ props.onSubmit(data)
+   
 }
     
     const { register, handleSubmit, formState: { errors } } = useForm();

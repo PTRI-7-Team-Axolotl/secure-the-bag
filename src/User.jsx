@@ -39,7 +39,10 @@ function User (props) {
       setJobIndex(Number(e.target.id))
   }
 
- 
+ const onSubmit = data => {
+  setIsShown(current => !current)
+  setJobs([jobs[jobIndex], data])
+ }
  
 
   const listItems = jobs.map((job, index) => 
@@ -56,7 +59,7 @@ function User (props) {
       )
    } else {
       return (
-    <JobInfo jobs={jobs} onClick={onClick} jobIndex={jobIndex}/>
+    <JobInfo jobs={jobs} onClick={onClick} jobIndex={jobIndex} onSubmit={onSubmit}/>
   )
     
 } 
