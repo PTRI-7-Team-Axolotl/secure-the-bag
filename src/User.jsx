@@ -3,11 +3,10 @@ import { Navigate } from 'react-router-dom'
 import JobInfo from './JobInfo.jsx'
 
 function User (props) {
-    const [isLoaded, setIsLoaded] = useState(false)
+    const [isShown, setIsShown] = useState(false);
+    const [jobIndex, setJobIndex] = useState(null);
 
-    useEffect(() => {
-      console.log(isLoaded)
-    })
+
 
     const[jobs, setJobs] = useState(
       [{
@@ -33,11 +32,34 @@ function User (props) {
         }]
     )
 
-  return (
-    <JobInfo job={jobs} />
+
+    const onClick = (e) => {
+      e.preventDefault()
+      setIsShown(current => !current)
+      setJobIndex(Number(e.target.id))
+  }
+
+ 
+ 
+
+  const listItems = jobs.map((job, index) => 
+  <div key={index} onClick={onClick} name={index} id={index}>{job.employer}</div>
+ );
+
+
+ 
+  if (!isShown) {
+      return (
+          <div>
+              {listItems}
+          </div>
+      )
+   } else {
+      return (
+    <JobInfo jobs={jobs} onClick={onClick} jobIndex={jobIndex}/>
   )
     
 } 
     
-    
+}
     export default User;
