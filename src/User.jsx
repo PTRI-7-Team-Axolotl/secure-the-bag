@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import JobInfo from './JobInfo.jsx';
 
+
 function User (props) {
 
   //Variable to determine whether the user component or JobInfo component is rendered
@@ -45,6 +46,7 @@ function User (props) {
     setJobs([jobs[jobIndex], data])
   }
  
+  //onClose function that renders the user's job unpon closing the job-details
   const onClose = e => {
     setIsShown(current => !current)
   }
@@ -53,11 +55,42 @@ function User (props) {
      <div key={index} onClick={onClick} name={index} id={index}>{job.employer}</div>
     );
 
+   const renderColumns = (i) => {
+      if (i === 0 ) {
+        return (
+          <div key={i} style={{ width: '25%', height: '100vh', margin: "0", padding: "0", outlineStyle: "solid" }}> To Apply {listItems}</div>
+        )
+      } if (i === 1 ) {
+        return (
+          <div key = {i} style = {{width: '25%', height: '100vh', margin: "0", padding: "0", outlineStyle: "solid"}}> Applied </div>
+        )
+      } if ( i === 2 ) {
+        return (
+          <div key = {i} style = {{width: '25%', height: '100vh', margin: "0", padding: "0", outlineStyle: "solid"}}> Interview </div>
+        )
+      
+      } if ( i === 3 ) {
+        return (
+          <div key = {i} style = {{width: '25%', height: '100vh', margin: "0", padding: "0", outlineStyle: "solid"}}> Resolved </div>
+        )
+        }
+    }
+
   //Our rendering logic
   if (!isShown) {
+      const columns = [];
+      for (let i = 0; i < 4; i++) {
+        columns.push(renderColumns(i))
+      }
       return (
-          <div>
-              {listItems}
+        <div 
+          style={{
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            flexWrap: 'wrap'
+          }}>
+            {columns}
           </div>
       )
    } else {
