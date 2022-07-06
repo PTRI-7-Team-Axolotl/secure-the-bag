@@ -91,11 +91,41 @@ authController.verifyUser = async (req, res, next) => {
 
 authController.createSession = async (req, res, next) => {
   const user_id = res.locals.user_id;
+  let token;
   try {
-    jwt.sign({}, secret, {});
+    token = await jwt.sign({ user_id }, secret);
+    console.log('Token --> ', token);
   } catch (error) {
-    
+    next({
+      log: 'Error in authController.createSession: unable to sign token',
+      status: 500,
+      message: 'Unable to sign token'
+    })
   }
-}
+  try {
+    const query = 'UPDATE users SET token=$1 WHERE user_id=$2';
+    const params = [token, user_id];
+    if (token && user_id) {
+      await db.query(query, params);
+    } else {
+      next({
+        log: 'Error in authController.createSession: no user/token',
+        status: 400,
+        message: 'No user/token'
+      })
+    }
+  } catch (error) {
+    next({
+      log: 'Error in authController.createSession: could not write session to database',
+      status: 500,
+      message: 'Database Error'
+    })
+  }
+  next();
+};
+
+authController.verifySession = async (req, res, next) => {
+
+};
 
 module.exports = authController;

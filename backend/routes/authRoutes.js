@@ -5,12 +5,12 @@ const authController = require('../controllers/authController')
 
 console.log('inside authRoutes.js')
 // add encryption middleware before signup when created (Mike)
-router.post('/signup', authController.encryptPassword, userController.signup, (req, res) => {
+router.post('/signup', authController.encryptPassword, userController.signup, authController.createSession, (req, res) => {
     console.log('im inside auth Router!!')
     return res.status(200).json(res.locals.user_id)
 })
 
-router.post('/login', authController.verifyUser, (req, res) => {
+router.post('/login', authController.verifyUser, authController.createSession, (req, res) => {
 
     return res.status(200).json(res.locals.verified_id)
 })
