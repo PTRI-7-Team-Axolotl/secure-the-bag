@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Item from './Item.jsx';
 import DropWrapper from './DropWrapper.jsx';
 import Col from './Col.jsx';
-import { data, statuses } from '../data/mock.js';
+import { data, statuses } from '../../data/mock.js';
 import './styles.css'
 
 const HomePage = props => {
