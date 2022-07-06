@@ -125,7 +125,25 @@ authController.createSession = async (req, res, next) => {
 };
 
 authController.verifySession = async (req, res, next) => {
-
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  if (token == null) next({
+    log: 'Error in authController.verifySession: No token',
+    status: 401,
+    message: 'No token'
+  });
+  try {
+    const result = await jwt.verify(token, process.env.JWT_SECRET);
+    console.log('Verified Token Info --> ', result);
+    req.body.user_id = result;
+    next();
+  } catch (error) {
+    next({
+      log: 'Error in authController.verifySession: token not valid',
+    status: 403,
+    message: 'Token not valid'
+    })
+  }
 };
 
 module.exports = authController;
