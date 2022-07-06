@@ -1,6 +1,6 @@
 import React from "react";
-import User from './User.jsx'
-import { Route,  Routes} from 'react-router-dom';
+// import User from './User.jsx';
+import { Link, Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
@@ -11,9 +11,11 @@ function App() {
                 {/* < Routes>
                 <Route path="/user" element={<User />}/>
                 </Routes> */}
-                <User />
+                {/*<User />*/}
             </div>  
       </header>
+      <Link to="/login">Login</Link> |{" "}
+      <Link to="/signup">Sign Up</Link>
     </div>
   );
 }

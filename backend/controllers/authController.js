@@ -5,15 +5,16 @@ const saltFactor = parseInt(process.env.SALT_WORK_FACTOR);
 const authController = {};
 
 authController.encryptPassword = async (req, res, next) => {
+  // console.log('request body --> ', req.body)
   const { password } = req.body;
-  
+  // console.log('inside encryptPassword')
   if (password) {
     console.log('Encrypting password...');
     try {
       const encryptedPW = await bcrypt.hash(password, saltFactor);
       res.locals.password = encryptedPW;
       next();
-    } catch (error) {
+    } catch (err) {
       next({
         log: 'Error in authController.encryptPassword: password hashing error - ' + JSON.stringify(err),
         status: 500,

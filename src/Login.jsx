@@ -2,13 +2,20 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Signup from './Signup.jsx';
+import axios from 'axios';
 
 function Login() {
 
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const onSubmit = data => {
+  const onSubmit = async data => {
     console.log(data);
     //do stuff with backend
+    // route to /auth route
+    await axios.post('/auth/login')
+      .then(response => {
+        console.log(response)
+      })
+      .catch(err => console.log(err));
   }
   console.log(errors);
   
@@ -16,8 +23,8 @@ function Login() {
     <div className='login' style={styles.container}>
       <h1 style={styles.h1}>Login</h1>
       <form onSubmit={handleSubmit(onSubmit)} style={styles.form}>
-        <input type="text" placeholder="Email" {...register("Email", {required: true, pattern: /^\S+@\S+$/i})} style={styles.inputs}/>
-        <input type="password" placeholder="Password" {...register("Password", {required: true})} style={styles.inputs}/>
+        <input type="text" placeholder="Email" {...register("email", {required: true, pattern: /^\S+@\S+$/i})} style={styles.inputs}/>
+        <input type="password" placeholder="Password" {...register("password", {required: true})} style={styles.inputs}/>
 
         <input type="submit" value="Login"/>
       </form>
@@ -39,11 +46,8 @@ const styles = {
     display: 'flex',
     justifyContent: 'center'
   },
-  labels: {
-    padding: '0.5em',
-    margin: '0.25em'
-  },
   inputs: {
+    border: '1px solid blue',
     padding: '.24em',
     margin: '1em'
   },
