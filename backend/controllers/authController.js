@@ -1,7 +1,9 @@
+require('dotenv').config();
 const db = require('../models/userModel');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const secret = process.env.JWT_SECRET;
 const saltFactor = parseInt(process.env.SALT_WORK_FACTOR);
-
 const authController = {};
 
 authController.encryptPassword = async (req, res, next) => {
@@ -86,5 +88,14 @@ authController.verifyUser = async (req, res, next) => {
     });
   }
 };
+
+authController.createSession = async (req, res, next) => {
+  const user_id = res.locals.user_id;
+  try {
+    jwt.sign({}, secret, {});
+  } catch (error) {
+    
+  }
+}
 
 module.exports = authController;
