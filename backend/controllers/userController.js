@@ -26,13 +26,6 @@ userController.signup = async (req, res, next) => {
 
 // create a new controller saveJobs
 userController.getJobs = async (req, res, next) => {
-<<<<<<< HEAD
-    try {
-
-    } catch(err) {
-        
-    }
-=======
     const options = {
         method: 'GET',
         url: 'https://google-jobs-search.p.rapidapi.com/search',
@@ -52,7 +45,6 @@ userController.getJobs = async (req, res, next) => {
           return next(error)
       });
       
->>>>>>> dev
 }
 
 module.exports = userController;
