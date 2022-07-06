@@ -43,7 +43,7 @@ authController.verifyUser = async (req, res, next) => {
     const params = [email];
     try {
       const results = await db.query(query, params);
-
+      console.log('results inside of verifyUser --> ', results.rows)
       if (results.rowCount !== 0) {
         try {
           const match = await bcrypt.compare(password, results.rows[0].password);
@@ -52,6 +52,7 @@ authController.verifyUser = async (req, res, next) => {
             res.locals.verified_id = results.rows[0].user_id;
             next();
           } else {
+            console.log('match inside of verifyUser --> ', match)
             next({
               log: 'Error in userController.verifyUser: Incorrect password',
               status: 400,

@@ -4,32 +4,24 @@ import Login from './Login.jsx';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 
-// styles are temporary
 
 function Signup() {
 
   const { register, handleSubmit, formState: { errors } } = useForm();
 
-  const onSubmit = async data => {
-    console.log('Data before request --> ', data);
+  const onSubmit = async formData => {
+    console.log('Signup form data passed to back-end --> ', formData);
 
     await axios.post('/auth/signup', {
-      email: data.email,
-      password: data.password
+      email: formData.email,
+      password: formData.password
     })
       .then(response => {
         console.log('Response from axios request --> ', response)
-        // do stuff
+        // let userId = response.data;
+        // navigate to User page after successful signup
       })
-      .catch(err => {
-        if (err.response) { 
-          console.log('Error response --> ', err.response);
-        } else if (err.request) { 
-          console.log('Error request --> ', err.request); 
-        } else { 
-          console.log('Full error --> ', err); 
-        }
-      });
+      .catch(err => console.log('Error in Signup --> ', err))
   }
   console.log(errors);
   

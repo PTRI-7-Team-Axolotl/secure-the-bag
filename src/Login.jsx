@@ -1,19 +1,35 @@
 import React from "react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Signup from './Signup.jsx';
 import axios from 'axios';
+import { useAuth } from './RequireAuth.jsx';
 
 function Login() {
 
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const onSubmit = async data => {
-    console.log(data);
-    //do stuff with backend
-    // route to /auth route
-    await axios.post('/auth/login')
+  let navigate = useNavigate();
+  let location = useLocation();
+  let auth = useAuth();
+
+  let from = location.state?.from?.pathname || '/';
+
+  const onSubmit = async formData => {
+    console.log('Login form data passed to back-end --> ', formData);
+
+    await axios.post('/auth/login', {
+      email: formData.email,
+      password: formData.password
+    })
       .then(response => {
-        console.log(response)
+        // response is the userId --> verifiedId
+        console.log('Successful axios request... Response --> ', response)
+        // let userId = response.data;
+        // navigate to User dashboard on successful signup using verifiedId to display correct info in User --> 
+        // navigate('/user', { replace: true });
+        auth.signin(formData.email, () => {
+          navigate(from, { replace: true });
+        })
       })
       .catch(err => console.log(err));
   }

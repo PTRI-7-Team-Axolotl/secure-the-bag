@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect} from 'react';
 
 function JobInfo(props) {
@@ -13,8 +12,8 @@ function JobInfo(props) {
     }
     
    const listItems = props.job.map((job, index) => 
-   <div key={index} onClick={onClick} name={index} id={index}>
-   {job.company}
+    <div key={index} onClick={onClick} name={index} id={index}>
+    {job.company}
   </div>
    );
 
@@ -30,7 +29,7 @@ function JobInfo(props) {
      else {
         return (
             <div>
-            {props.job[jobIndex].title}
+                {props.job[jobIndex].title}
             </div>
         )
     }
