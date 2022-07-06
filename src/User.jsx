@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import JobInfo from './JobInfo.jsx';
 import { useDrag, useDrop } from 'react-dnd'
 import JobCard from './JobCard.jsx'
+import Colunms from './Columns.jsx'
 
 
 function User (props) {
@@ -23,6 +24,7 @@ function User (props) {
         city:     "Denver",
         remote:    'yes',
         description: "put some words in here",
+        index: 0
         }, {
           location: 1,
           employer: "Google2",
@@ -34,6 +36,7 @@ function User (props) {
           city:     "Denver2",
           remote:    'yes2',
           description: "put some words in here2",
+          index: 1
         },  
         {location: 1,
         employer: "Google3",
@@ -44,7 +47,10 @@ function User (props) {
         salary: '$150,0002',
         city:     "Denver2",
         remote:    'yes2',
-        description: "put some words in here2"}]
+        description: "put some words in here2",
+        index: 2
+      }]
+        
     )
 
    //onClick Function that activates when a job is clicked
@@ -69,21 +75,15 @@ function User (props) {
      <div className='job-cards' onClick={onClick} 
  > {< JobCard  key={index} name={index} id={index} jobs={jobs} />}
  </div>
+ 
     );
 
-   const renderColumns = (i) => {
-        if (i === 0) return  <div key={i} style={{ width: '25%', height: '100vh', margin: "0", padding: "0", outlineStyle: "solid" }}>{listItems}</div>
-        return (
-          <div key={i} style={{ width: '25%', height: '100vh', margin: "0", padding: "0", outlineStyle: "solid" }}></div>
-        )
-    
-    }
 
   //Our rendering logic
   if (!isShown) {
       const columns = [];
       for (let i = 0; i < 4; i++) {
-        columns.push(renderColumns(i))
+        columns.push(<Colunms jobs={jobs}/>)
       }
       return (
         <div 
@@ -93,6 +93,9 @@ function User (props) {
             display: 'flex',
             flexWrap: 'wrap'
           }}>
+            <h3> {listItems}</h3>
+           
+            <div></div>
             {columns}
           </div>
       )
