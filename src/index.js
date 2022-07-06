@@ -9,6 +9,7 @@ import User from './User.jsx';
 // import JobInfo from './JobInfo.jsx';
 import { RequireAuth, AuthProvider } from './Auth.jsx';
 
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>

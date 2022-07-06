@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
 import JobInfo from './JobInfo.jsx';
 
 
-
 function User (props) {
-  console.log('User.props --> ', props)
 
   //Variable to determine whether the user component or JobInfo component is rendered
   const [isShown, setIsShown] = useState(false);
@@ -34,25 +31,27 @@ function User (props) {
         city:     "Denver2",
         remote:    'yes2',
         description: "put some words in here2",
-      }]
+    }]
   )
+
   //onClick Function that activates when a job is clicked
   const onClick = (e) => {
     e.preventDefault()
     setIsShown(current => !current)
     setJobIndex(Number(e.target.id))
   }
+
   //onSubmit Function that activates when the form is submitted
   const onSubmit = data => {
     setIsShown(current => !current)
     setJobs([jobs[jobIndex], data])
   }
-
+ 
   //onClose function that renders the user's job unpon closing the job-details
   const onClose = e => {
     setIsShown(current => !current)
   }
-     //Mapping out our jobs to be displayed on the page
+  //Mapping out our jobs to be displayed on the page
   const listItems = jobs.map((job, index) => 
     <div key={index} onClick={onClick} name={index} id={index}>{job.employer}</div>
   );
@@ -87,25 +86,22 @@ function User (props) {
       columns.push(renderColumns(i))
     }
     return (
-      <div>
-        <div>
-          {listItems}
-        </div>
-        <div
-          style={{
-            width: '100%',
-            height: '100%',
-            display: 'flex',
-            flexWrap: 'wrap'
-          }}>
-          {columns}
-        </div>
+      <div 
+        style={{
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          flexWrap: 'wrap'
+        }}
+      >
+        {columns}
       </div>
     )
-  } else return (
-    <JobInfo jobs={jobs} onClick={onClick} jobIndex={jobIndex} onSubmit={onSubmit} onClose={onClose}/>
-  )
-    
-} 
+  } else {
+      return (
+        <JobInfo jobs={jobs} onClick={onClick} jobIndex={jobIndex} onSubmit={onSubmit} onClose={onClose}/>
+      )
+    }
+}
     
 export default User;
