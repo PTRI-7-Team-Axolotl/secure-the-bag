@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import JobInfo from './JobInfo.jsx';
+import { useDrag, useDrop } from 'react-dnd'
 
 
 function User (props) {
@@ -11,6 +12,7 @@ function User (props) {
   //Variable to hold mockstate.  Once we use live data, we will need to set this to an empty array
     const[jobs, setJobs] = useState(
       [{
+        location: 1,
         employer: "Google",
         logo:     "placeholder",
         title:  'software engineer', 
@@ -21,6 +23,7 @@ function User (props) {
         remote:    'yes',
         description: "put some words in here",
         }, {
+          location: 1,
           employer: "Google2",
           logo:     "placeholder2",
           title:  'software engineer2', 
@@ -30,9 +33,24 @@ function User (props) {
           city:     "Denver2",
           remote:    'yes2',
           description: "put some words in here2",
-        }]
+        },  
+        {location: 1,
+        employer: "Google3",
+        logo:     "placeholder2",
+        title:  'software engineer2', 
+        expiration: "June 23, 20222",  
+        application: 'wwww.apply here2',
+        salary: '$150,0002',
+        city:     "Denver2",
+        remote:    'yes2',
+        description: "put some words in here2"}]
     )
-
+    const [{isDragging}, drag] = useDrag(() => ({
+      type: 'jobs',
+      collect: monitor => ({
+        isDragging: monitor.isDragging(),
+      }),
+    }))
    //onClick Function that activates when a job is clicked
     const onClick = (e) => {
       e.preventDefault()
@@ -52,28 +70,24 @@ function User (props) {
   }
      //Mapping out our jobs to be displayed on the page
      const listItems = jobs.map((job, index) => 
-     <div key={index} onClick={onClick} name={index} id={index}>{job.employer}</div>
+     <div key={index} onClick={onClick} name={index} id={index} className='job-cards'
+     ref={drag}
+     style={{
+         fontSize: 25,
+         fontWeight: 'bold',
+         cursor: 'move',
+         draggable:'true'
+     }}
+ > {job.employer}
+ </div>
     );
 
    const renderColumns = (i) => {
-      if (i === 0 ) {
+        if (i === 0) return  <div key={i} style={{ width: '25%', height: '100vh', margin: "0", padding: "0", outlineStyle: "solid" }}>{listItems}</div>
         return (
-          <div key={i} style={{ width: '25%', height: '100vh', margin: "0", padding: "0", outlineStyle: "solid" }}> To Apply {listItems}</div>
+          <div key={i} style={{ width: '25%', height: '100vh', margin: "0", padding: "0", outlineStyle: "solid" }}></div>
         )
-      } if (i === 1 ) {
-        return (
-          <div key = {i} style = {{width: '25%', height: '100vh', margin: "0", padding: "0", outlineStyle: "solid"}}> Applied </div>
-        )
-      } if ( i === 2 ) {
-        return (
-          <div key = {i} style = {{width: '25%', height: '100vh', margin: "0", padding: "0", outlineStyle: "solid"}}> Interview </div>
-        )
-      
-      } if ( i === 3 ) {
-        return (
-          <div key = {i} style = {{width: '25%', height: '100vh', margin: "0", padding: "0", outlineStyle: "solid"}}> Resolved </div>
-        )
-        }
+    
     }
 
   //Our rendering logic
@@ -95,7 +109,7 @@ function User (props) {
       )
    } else {
       return (
-    <JobInfo jobs={jobs} onClick={onClick} jobIndex={jobIndex} onSubmit={onSubmit} onClose={onClose}/>
+    <JobInfo jobs={jobs} draggable="true" onClick={onClick} jobIndex={jobIndex} onSubmit={onSubmit} onClose={onClose}/>
   )
     
 } 
