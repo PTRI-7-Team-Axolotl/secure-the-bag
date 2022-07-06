@@ -7,7 +7,7 @@ import Login from './Login.jsx';
 import Signup from './Signup.jsx';
 import User from './User.jsx';
 // import JobInfo from './JobInfo.jsx';
-import { RequireAuth, AuthProvider } from './RequireAuth.jsx';
+import { RequireAuth, AuthProvider } from './Auth.jsx';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

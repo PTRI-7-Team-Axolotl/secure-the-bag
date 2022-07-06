@@ -1,9 +1,9 @@
 import React from "react";
+import axios from 'axios';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Signup from './Signup.jsx';
-import axios from 'axios';
-import { useAuth } from './RequireAuth.jsx';
+import { useAuth } from './Auth.jsx';
 
 function Login() {
 
@@ -23,7 +23,7 @@ function Login() {
     })
       .then(response => {
         // response is the userId --> verifiedId
-        console.log('Successful axios request... Response --> ', response)
+        console.log('Successful Login request... Response --> ', response)
         // let userId = response.data;
         // navigate to User dashboard on successful signup using verifiedId to display correct info in User --> 
         // navigate('/user', { replace: true });
@@ -31,7 +31,7 @@ function Login() {
           navigate(from, { replace: true });
         })
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log('Error in Login --> ', err));
   }
   console.log(errors);
   
