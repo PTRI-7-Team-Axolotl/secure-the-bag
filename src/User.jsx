@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import JobInfo from './JobInfo.jsx';
 import { useDrag, useDrop } from 'react-dnd'
+import JobCard from './JobCard.jsx'
 
 
 function User (props) {
@@ -45,12 +46,7 @@ function User (props) {
         remote:    'yes2',
         description: "put some words in here2"}]
     )
-    const [{isDragging}, drag] = useDrag(() => ({
-      type: 'jobs',
-      collect: monitor => ({
-        isDragging: monitor.isDragging(),
-      }),
-    }))
+
    //onClick Function that activates when a job is clicked
     const onClick = (e) => {
       e.preventDefault()
@@ -70,15 +66,8 @@ function User (props) {
   }
      //Mapping out our jobs to be displayed on the page
      const listItems = jobs.map((job, index) => 
-     <div key={index} onClick={onClick} name={index} id={index} className='job-cards'
-     ref={drag}
-     style={{
-         fontSize: 25,
-         fontWeight: 'bold',
-         cursor: 'move',
-         draggable:'true'
-     }}
- > {job.employer}
+     <div className='job-cards' onClick={onClick} 
+ > {< JobCard  key={index} name={index} id={index} jobs={jobs} />}
  </div>
     );
 
