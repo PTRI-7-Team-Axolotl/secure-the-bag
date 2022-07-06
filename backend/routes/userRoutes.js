@@ -2,10 +2,14 @@ const express = require('express');
 const userController = require('../controllers/userController')
 const router = express.Router();
 
-router.get('/getjobs', userController.getJobs, (req, res) => {
-    console.log("I landed in getJobs!")
-    console.log(res.locals.jobResults)
+router.get('/getjob', userController.getJobs, (req, res) => {
+    
     return res.status(200).json(res.locals.jobResults);
+})
+
+router.post('/savejob', userController.saveJob, (req, res) => {
+
+    return res.status(200).json(res.locals.user_id)
 })
 
 module.exports = router;

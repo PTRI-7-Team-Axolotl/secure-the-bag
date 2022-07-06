@@ -26,7 +26,7 @@ if (process.env.NODE_ENV === 'production') {
   );
 }
 
-// Routes
+// // Routes
 app.use('/users', userRouter);
 app.use('/auth', authRouter);
 app.use('/api', apiRouter);
