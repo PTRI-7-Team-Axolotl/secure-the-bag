@@ -30,7 +30,7 @@ function User (props) {
   //onClick Function that activates when a job is clicked
   const onClick = (e) => {
     console.log(e)
-    e.preventDefault()
+    //e.preventDefault()
     // setIsShown(current => !current)
     // setJobIndex(Number(e.target.id))
   }
@@ -101,7 +101,7 @@ function User (props) {
       )
    } else {
       return (
-    <JobInfo jobs={jobs} onClick={onClick} jobIndex={jobIndex} onSubmit={onSubmit} onClose={onClose}/>
+    <JobInfo jobs={jobs} jobIndex={jobIndex} onSubmit={onSubmit} onClose={onClose}/>
   )
     
 } 

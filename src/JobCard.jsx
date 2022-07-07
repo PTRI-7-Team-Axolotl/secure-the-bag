@@ -1,33 +1,13 @@
 import React, { Fragment, useState, useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
-//import Window from "./Window.jsx";
 import ITEM_TYPE from "../data/types.js";
+import JobInfo from "./JobInfo.jsx";
 
-// function JobCard( {id, jobs} ){
-//     const [collected, drag, dragPreview] = useDrag(() => ({
-//         type: 'jobs',
-//         item: { id }
-//       }))
-//       return collected.isDragging ? (
-//         <div ref={dragPreview} />
-//       ) : (
-//         <div ref={drag} {...collected} draggable style={{
-//             fontSize: 25,
-//             fontWeight: 'bold',
-//             cursor: 'move',
-//             draggable:'true'
-//         }}>
-//         {jobs[id].employer}
-//         </div>
-//       )
-// }
+
 
 const JobCard = ({ item, index, moveItem, status, props }) => {
   //ref allows us to imperatively modify a child
   const ref = useRef(null)
-  const onClick = e => {
-    props.onClick(e)
-}
 
   const [, drop] = useDrop({
       accept: ITEM_TYPE,
@@ -68,11 +48,11 @@ const JobCard = ({ item, index, moveItem, status, props }) => {
       })
   })
 
-  // const [show, setShow] = useState(false)
+  const [show, setShow] = useState(false)
 
-  // const onOpen = () => setShow(true);
+  const onOpen = () => setShow(true);
 
-  // const onClose = () => setShow(false)
+  const onClose = () => setShow(false)
 
   drag(drop(ref));
   return (
@@ -81,10 +61,16 @@ const JobCard = ({ item, index, moveItem, status, props }) => {
             ref={ref}
             style={{ opacity: isDragging ? 0: 1}}
             className={"item"}
+            onClick={onOpen}
             >
             <div className={"color-bar"} style={{ backgroundColor: status.color }}/>
-            <p className={"item-employer"}  onClick={onClick} >{item.employer}</p>
+            <p className={"item-employer"} >{item.employer}</p>
             </div>
+            <JobInfo 
+                item={item}
+                onClose={onClose}
+                show={show}
+            />
     </Fragment>
 )
 
