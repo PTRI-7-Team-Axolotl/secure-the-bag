@@ -39,10 +39,6 @@ module.exports = {
         proxy: {
             '/': `http://localhost:${process.env.PORT}`
         },
-        // devServer always defaults to 8080
-        // host: 'localhost',
-        // port: 8080
-
     },
     plugins: [
         new HtmlWebpackPlugin({

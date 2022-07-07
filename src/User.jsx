@@ -8,38 +8,24 @@ import Colunms from './Columns.jsx'
 function User (props) {
 
   //Variable to determine whether the user component or JobInfo component is rendered
-    const [isShown, setIsShown] = useState(false);
+  const [isShown, setIsShown] = useState(false);
   //Variable to hold which job was clicked
-    const [jobIndex, setJobIndex] = useState(null);
+  const [jobIndex, setJobIndex] = useState(null);
   //Variable to hold mockstate.  Once we use live data, we will need to set this to an empty array
-    const[jobs, setJobs] = useState(
-      [{
-        location: 1,
-        employer: "Google",
-        logo:     "placeholder",
-        title:  'software engineer', 
-        expiration: "June 23, 2022",  
-        application: 'wwww.apply here',
-        salary: '$150,000',
-        city:     "Denver",
-        remote:    'yes',
-        description: "put some words in here",
-        index: 0
-        }, {
-          location: 1,
-          employer: "Google2",
-          logo:     "placeholder2",
-          title:  'software engineer2', 
-          expiration: "June 23, 20222",  
-          application: 'wwww.apply here2',
-          salary: '$150,0002',
-          city:     "Denver2",
-          remote:    'yes2',
-          description: "put some words in here2",
-          index: 1
-        },  
-        {location: 1,
-        employer: "Google3",
+  const[jobs, setJobs] = useState(
+    [{
+      employer: "Google",
+      logo:     "placeholder",
+      title:  'software engineer', 
+      expiration: "June 23, 2022",  
+      application: 'wwww.apply here',
+      salary: '$150,000',
+      city:     "Denver",
+      remote:    'yes',
+      description: "put some words in here",
+      }, 
+      {
+        employer: "Google2",
         logo:     "placeholder2",
         title:  'software engineer2', 
         expiration: "June 23, 20222",  
@@ -48,20 +34,18 @@ function User (props) {
         city:     "Denver2",
         remote:    'yes2',
         description: "put some words in here2",
-        index: 2
-      }]
-        
-    )
+    }]
+  )
 
-   //onClick Function that activates when a job is clicked
-    const onClick = (e) => {
-      e.preventDefault()
-      setIsShown(current => !current)
-      setJobIndex(Number(e.target.id))
-    }
+  //onClick Function that activates when a job is clicked
+  const onClick = (e) => {
+    e.preventDefault()
+    setIsShown(current => !current)
+    setJobIndex(Number(e.target.id))
+  }
 
-    //onSubmit Function that activates when the form is submitted
-    const onSubmit = data => {
+  //onSubmit Function that activates when the form is submitted
+  const onSubmit = data => {
     setIsShown(current => !current)
     setJobs([jobs[jobIndex], data])
   }
@@ -107,4 +91,5 @@ function User (props) {
 } 
     
 }
-    export default User;
+    
+export default User;
