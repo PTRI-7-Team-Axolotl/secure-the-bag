@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import Item from './Item.jsx';
+import Item from '../Item.jsx';
 import DropWrapper from './DropWrapper.jsx';
 import Col from './Col.jsx';
 import { data, statuses } from '../../data/mock.js';

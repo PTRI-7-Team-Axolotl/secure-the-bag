@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
-import Window from "./Window.jsx";
-import ITEM_TYPE from "../../data/types.js";
+//import Window from "./Window.jsx";
+import ITEM_TYPE from "../data/types.js";
 
 const Item = ({ item, index, moveItem, status }) => {
     //ref allows us to imperatively modify a child
@@ -61,14 +61,9 @@ const Item = ({ item, index, moveItem, status }) => {
                     onClick={onOpen}
                     >
                     <div className={"color-bar"} style={{ backgroundColor: status.color }}/>
-                    <p className={"item-title"}>{item.content}</p>
+                    <p className={"item-employer"}>{item.employer}</p>
                     <p className={"item-status"}>{item.icon}</p>
                     </div>
-            <Window 
-                item={item}
-                onClose={onClose}
-                show={show}
-            />
             </Fragment>
         )
 

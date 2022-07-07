@@ -8,6 +8,7 @@ import Signup from './Signup.jsx';
 import User from './User.jsx';
 // import JobInfo from './JobInfo.jsx';
 import { RequireAuth, AuthProvider } from './Auth.jsx';
+import "./styles.css";
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -22,9 +23,10 @@ root.render(
           <Route 
             path='user' 
             element={
-            <RequireAuth>
+            //<RequireAuth>
+              
               <User />
-            </RequireAuth>
+            //</RequireAuth>
             } 
             //  <Route path=':userId' element={<JobInfo />} />
           />

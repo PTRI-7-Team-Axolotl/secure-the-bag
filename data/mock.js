@@ -9,29 +9,29 @@ const data = [{
     icon: "⭕️",
     status: "open",
     title: "software developer",
-    content: "tesla"
+    employer: "tesla"
 }, {
     id: 3,
     icon: "⭕️",
     status: "open",
     title: "blockchain engineer",
-    content: "bank"
+    employer: "bank"
 }];
 
 const statuses = [{
-    status: "To Apply",
+    status: "open",
     icon: "⭕️",
     color: "#EB5A46"
 }, {
-    status: "Applied",
+    status: "applied",
     icon: "🔆️",
     color: "#00C2E0"
 }, {
-    status: "Interview",
+    status: "interview",
     icon: "📝",
     color: "#C377E0"
 }, {
-    status: "Resolved",
+    status: "resolved",
     icon: "✅",
     color: "#3981DE"
 }];

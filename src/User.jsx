@@ -3,6 +3,8 @@ import JobInfo from './JobInfo.jsx';
 import { useDrag, useDrop } from 'react-dnd'
 import JobCard from './JobCard.jsx'
 import Colunms from './Columns.jsx'
+import { data, statuses } from '../data/mock.js'
+import Header from './Header.jsx'
 
 
 function User (props) {
@@ -12,30 +14,8 @@ function User (props) {
   //Variable to hold which job was clicked
   const [jobIndex, setJobIndex] = useState(null);
   //Variable to hold mockstate.  Once we use live data, we will need to set this to an empty array
-  const[jobs, setJobs] = useState(
-    [{
-      employer: "Google",
-      logo:     "placeholder",
-      title:  'software engineer', 
-      expiration: "June 23, 2022",  
-      application: 'wwww.apply here',
-      salary: '$150,000',
-      city:     "Denver",
-      remote:    'yes',
-      description: "put some words in here",
-      }, 
-      {
-        employer: "Google2",
-        logo:     "placeholder2",
-        title:  'software engineer2', 
-        expiration: "June 23, 20222",  
-        application: 'wwww.apply here2',
-        salary: '$150,0002',
-        city:     "Denver2",
-        remote:    'yes2',
-        description: "put some words in here2",
-    }]
-  )
+  const[jobs, setJobs] = useState(data)
+
 
   //onClick Function that activates when a job is clicked
   const onClick = (e) => {
@@ -55,32 +35,56 @@ function User (props) {
     setIsShown(current => !current)
   }
      //Mapping out our jobs to be displayed on the page
-     const listItems = jobs.map((job, index) => 
-     <div className='job-cards' onClick={onClick} 
- > {< JobCard  key={index} name={index} id={index} jobs={jobs} />}
- </div>
+//      const listItems = jobs.map((job, index) => 
+//      <div className='job-cards' onClick={onClick} 
+//  > {< JobCard  key={index} name={index} id={index} jobs={jobs} />}
+//  </div>
  
-    );
+    //);
+    const moveItem = ( dragIndex, hoverIndex) => {
+      const item = jobs[dragIndex];
+      setJobs(prevState => {
+          const newItems = prevState.filter((i, idx) => idx !== dragIndex)
+          newItems.splice(hoverIndex, 0, item);
+          return [...newItems];
+      });
+ };
+
 
 
   //Our rendering logic
   if (!isShown) {
-      const columns = [];
-      for (let i = 0; i < 4; i++) {
-        columns.push(<Colunms jobs={jobs}/>)
-      }
+      // const columns = [];
+      // for (let i = 0; i < 4; i++) {
+      //   columns.push(<Colunms jobs={jobs}/>)
+      // }
       return (
-        <div 
-          style={{
-            width: '100%',
-            height: '100%',
-            display: 'flex',
-            flexWrap: 'wrap'
-          }}>
-            <h3> {listItems}</h3>
+        // <div 
+        //   style={{
+        //     width: '100%',
+        //     height: '100%',
+        //     display: 'flex',
+        //     flexWrap: 'wrap'
+        //   }}>
+        <div className={"row"}>
+            <Header/>
+            {statuses.map(s => {
+                 return (
+                  <div key={s.status} className={"col-wrapper"}>
+                        <h2 className={'col-header'}>{s.status.toUpperCase()}</h2>
+                        <Colunms>
+                        { jobs 
+                            .filter(i => i.status === s.status)
+                            .map((i, idx ) => <JobCard key={i.id} item={i} index={idx}  moveItem={moveItem} status={s}/>)}
+                        </Colunms>
+                    </div>
+                )
+            })}
+           
+            {/* <h3> {listItems}</h3>
            
             <div></div>
-            {columns}
+            {columns} */}
           </div>
       )
    } else {
@@ -91,5 +95,7 @@ function User (props) {
 } 
     
 }
+
+//moveItem={moveItem}
     
 export default User;
