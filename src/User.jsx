@@ -4,7 +4,8 @@ import { useDrag, useDrop } from 'react-dnd'
 import JobCard from './JobCard.jsx'
 import Colunms from './Columns.jsx'
 import { data, statuses } from '../data/mock.js'
-import Header from './Header.jsx'
+import Header from './Header.jsx';
+import DropWrapper from './DropWrapper.jsx'
 
 
 function User (props) {
@@ -72,11 +73,13 @@ function User (props) {
                  return (
                   <div key={s.status} className={"col-wrapper"}>
                         <h2 className={'col-header'}>{s.status.toUpperCase()}</h2>
+                        <DropWrapper status={s.status}>
                         <Colunms>
                         { jobs 
                             .filter(i => i.status === s.status)
                             .map((i, idx ) => <JobCard key={i.id} item={i} index={idx}  moveItem={moveItem} status={s}/>)}
                         </Colunms>
+                        </DropWrapper>
                     </div>
                 )
             })}
