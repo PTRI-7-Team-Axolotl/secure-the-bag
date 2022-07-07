@@ -16,7 +16,7 @@ authController.encryptPassword = async (req, res, next) => {
       next();
     } catch (err) {
       next({
-        log: 'Error in authController.encryptPassword: password hashing error - ' + JSON.stringify(error),
+        log: 'Error in authController.encryptPassword: password hashing error - ' + JSON.stringify(err),
         status: 500,
         message: 'Could not encrypt password'
       });
