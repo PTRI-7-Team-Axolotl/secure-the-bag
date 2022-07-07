@@ -29,9 +29,10 @@ function User (props) {
 
   //onClick Function that activates when a job is clicked
   const onClick = (e) => {
+    console.log(e)
     e.preventDefault()
-    setIsShown(current => !current)
-    setJobIndex(Number(e.target.id))
+    // setIsShown(current => !current)
+    // setJobIndex(Number(e.target.id))
   }
 
   //onSubmit Function that activates when the form is submitted
@@ -77,7 +78,6 @@ function User (props) {
         //     flexWrap: 'wrap'
         //   }}>
         <div className={"row"}>
-            <Header/>
             {statuses.map(s => {
                  return (
                   <div key={s.status} className={"col-wrapper"}>
@@ -86,7 +86,7 @@ function User (props) {
                         <Colunms>
                         { jobs 
                             .filter(i => i.status === s.status)
-                            .map((i, idx ) => <JobCard key={i.id} item={i} index={idx}  moveItem={moveItem} status={s}/>)}
+                            .map((i, idx ) => <JobCard onClick={onClick} key={i.id} item={i} index={idx}  moveItem={moveItem} status={s}/>)}
                         </Colunms>
                         </DropWrapper>
                     </div>
@@ -101,7 +101,7 @@ function User (props) {
       )
    } else {
       return (
-    <JobInfo jobs={jobs} draggable="true" onClick={onClick} jobIndex={jobIndex} onSubmit={onSubmit} onClose={onClose}/>
+    <JobInfo jobs={jobs} onClick={onClick} jobIndex={jobIndex} onSubmit={onSubmit} onClose={onClose}/>
   )
     
 } 

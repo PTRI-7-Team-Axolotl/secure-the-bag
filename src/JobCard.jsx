@@ -22,9 +22,12 @@ import ITEM_TYPE from "../data/types.js";
 //       )
 // }
 
-const JobCard = ({ item, index, moveItem, status }) => {
+const JobCard = ({ item, index, moveItem, status, props }) => {
   //ref allows us to imperatively modify a child
   const ref = useRef(null)
+  const onClick = e => {
+    props.onClick(e)
+}
 
   const [, drop] = useDrop({
       accept: ITEM_TYPE,
@@ -48,7 +51,7 @@ const JobCard = ({ item, index, moveItem, status }) => {
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
           return;
       }
-      if (dragIndex > hoverIndex && hoverClientY < hoverMiddleY) {
+      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
           return;
       }
       //moving item from dragIndex to hoverIndex instead
@@ -80,7 +83,7 @@ const JobCard = ({ item, index, moveItem, status }) => {
             className={"item"}
             >
             <div className={"color-bar"} style={{ backgroundColor: status.color }}/>
-            <p className={"item-employer"}>{item.employer}</p>
+            <p className={"item-employer"}  onClick={onClick} >{item.employer}</p>
             </div>
     </Fragment>
 )
