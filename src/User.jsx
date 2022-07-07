@@ -16,7 +16,16 @@ function User (props) {
   const [jobIndex, setJobIndex] = useState(null);
   //Variable to hold mockstate.  Once we use live data, we will need to set this to an empty array
   const[jobs, setJobs] = useState(data)
+  const onDrop = (item, monitor, status) => {
+    const mapping = statuses.find(si => si.status === status);
 
+    setJobs(prevState => {
+        const newItems = prevState
+            .filter(i => i.id !== item.id)
+            .concat({...item, status, icon: mapping.icon})
+            return [...newItems];
+        });
+    };
 
   //onClick Function that activates when a job is clicked
   const onClick = (e) => {
@@ -73,7 +82,7 @@ function User (props) {
                  return (
                   <div key={s.status} className={"col-wrapper"}>
                         <h2 className={'col-header'}>{s.status.toUpperCase()}</h2>
-                        <DropWrapper status={s.status}>
+                        <DropWrapper onDrop={onDrop} status={s.status}>
                         <Colunms>
                         { jobs 
                             .filter(i => i.status === s.status)
