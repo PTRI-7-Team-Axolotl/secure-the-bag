@@ -1,14 +1,37 @@
 import React from "react";
-import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Signup from './Signup.jsx';
+import { useAuth } from './Auth.jsx';
 
 function Login() {
 
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const onSubmit = data => {
-    console.log(data);
-    //do stuff with backend
+  let navigate = useNavigate();
+  let location = useLocation();
+  let auth = useAuth();
+
+  let from = location.state?.from?.pathname || '/';
+
+  const onSubmit = async formData => {
+    console.log('Login form data passed to back-end --> ', formData);
+
+    await axios.post('/auth/login', {
+      email: formData.email,
+      password: formData.password
+    })
+      .then(response => {
+        // response is the userId --> verifiedId
+        console.log('Successful Login request... Response --> ', response)
+        // let userId = response.data;
+        // navigate to User dashboard on successful signup using verifiedId to display correct info in User --> 
+        // navigate('/user', { replace: true });
+        auth.signin(formData.email, () => {
+          navigate(from, { replace: true });
+        })
+      })
+      .catch(err => console.log('Error in Login --> ', err));
   }
   console.log(errors);
   
@@ -16,8 +39,8 @@ function Login() {
     <div className='login' style={styles.container}>
       <h1 style={styles.h1}>Login</h1>
       <form onSubmit={handleSubmit(onSubmit)} style={styles.form}>
-        <input type="text" placeholder="Email" {...register("Email", {required: true, pattern: /^\S+@\S+$/i})} style={styles.inputs}/>
-        <input type="password" placeholder="Password" {...register("Password", {required: true})} style={styles.inputs}/>
+        <input type="text" placeholder="Email" {...register("email", {required: true, pattern: /^\S+@\S+$/i})} style={styles.inputs}/>
+        <input type="password" placeholder="Password" {...register("password", {required: true})} style={styles.inputs}/>
 
         <input type="submit" value="Login"/>
       </form>
@@ -39,11 +62,8 @@ const styles = {
     display: 'flex',
     justifyContent: 'center'
   },
-  labels: {
-    padding: '0.5em',
-    margin: '0.25em'
-  },
   inputs: {
+    border: '1px solid blue',
     padding: '.24em',
     margin: '1em'
   },

@@ -1,55 +1,50 @@
-
-import React, { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form'
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import './styles.css'
 
 function JobInfo(props) {
-    const [jobIndex, setJobIndex] = useState(null)
-    const [isShown, setIsShown] = useState(false)
-    const [job, setJob] = useState(props.job)
-    const [isLoaded, setIsLoaded] = useState(props.isLoaded)
-    
-    const onSubmit = data => {
-        setIsLoaded(true);
-        setJob([...job, data]);
-        console.log(data);
-        setIsShown(current => !current);
-    }
-   
-    
+
+   //react-hook-form hooks
     const { register, handleSubmit, formState: { errors } } = useForm();
     
-    let onClick = (e) => {
-        e.preventDefault()
-        //let displayJob = e.target.__reactProps$fvcg9ohi4q9.id
-        setIsShown(current => !current)
-        setJobIndex(Number(e.target.id))
+    //Linking our form submission with State
+    const onSubmit = data => {
+        props.onSubmit(data)
+    }
+
+//Reloading the user page if closing the Job details
+    const onClick = e => {
+        props.onClose(e)
     }
     
-   
-
-   const listItems = props.job.map((job, index) => 
-    <div key={index} onClick={onClick} name={index} id={index}>{job.company}</div>
-   );
-
-
-   
-    if (!isShown) {
-        return (
-            <div>
-                {listItems}
-            </div>
-        )
-     } else {
-        return (
-            <div>
-                <form onSubmit={handleSubmit(onSubmit)} >
-                     <input type="text" {...register("title")} defaultValue={job[jobIndex].title} />
-                    <input type="submit"/>
+//displaying our data
+  return (
+            <div className="job-details">
+                <form className = "job-details-wrapper" onSubmit={handleSubmit(onSubmit)} >
+                    <div classNam="job-details-job"></div>
+                    <label for="employer">Company: </label>
+                    <input type="text" {...register("employer")} defaultValue={props.jobs[props.jobIndex].employer} />
+                    <label for="title">Job Title: </label>
+                     <input type="text" {...register("title")} defaultValue={props.jobs[props.jobIndex].title} />
+                     <label for="expiration">Application Closes: </label>
+                     <input type="text" {...register("expiration")} defaultValue={props.jobs[props.jobIndex].expiration} />
+                     <div className="job-details-job"></div>
+                     <label for="application">Application Link: </label>
+                     <input type="text" {...register("application")} defaultValue={props.jobs[props.jobIndex].application} />
+                     <label for="salary">Max Salary: </label>
+                     <input type="text" {...register("salary")} defaultValue={props.jobs[props.jobIndex].salary} />
+                     <label for="city">City: </label>
+                     <input type="text" {...register("city")} defaultValue={props.jobs[props.jobIndex].city} />
+                     <div className="job-details-job"></div>
+                     <label for="description">Job Description: </label>
+                     <input type="text" {...register("description")} defaultValue={props.jobs[props.jobIndex].description} />
+                    <input type="submit" value="Save"/>
+                    <button onClick={onClick}>Close</button>
                 </form>
             </div>
         )
     }
-   }
+   
 
 
 
