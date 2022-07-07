@@ -17,7 +17,7 @@ function Signup() {
       password: formData.password
     })
       .then(response => {
-        console.log('Successful Signup request... Response --> ', response)
+        console.log('Successful Signup request... UserId --> ', response)
         // let userId = response.data;
         // navigate to User page after successful signup
       })

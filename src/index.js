@@ -15,29 +15,29 @@ root.render(
   <BrowserRouter>
     <React.StrictMode>
       <AuthProvider>
-       <Routes>
-        <Route path='/' element={<App />} >
-          <Route path='login' element={<Login />} />
-          <Route path='signup' element={<Signup />} />
-          <Route 
-            path='user' 
-            element={
-            <RequireAuth>
-              <User />
-            </RequireAuth>
-            } 
-            //  <Route path=':userId' element={<JobInfo />} />
-          />
-          <Route
-            path="*"
-            element={
-              <main style={{ padding: "1rem" }}>
-                <p>Bag not secured.</p>
-              </main>
-            }
-          />
-        </Route>
-      </Routes>
+        <Routes>
+          <Route path='/' element={<App />} >
+            <Route path='login' element={<Login />} />
+            <Route path='signup' element={<Signup />} />
+            <Route 
+              path='user' 
+              element={
+              <RequireAuth>
+                <User />
+              </RequireAuth>
+              } 
+              //  <Route path=':userId' element={<JobInfo />} />
+            />
+            <Route
+              path="*"
+              element={
+                <main style={{ padding: "1rem" }}>
+                  <p>Bag not secured.</p>
+                </main>
+              }
+            />
+          </Route>
+        </Routes>
       </AuthProvider>
     </React.StrictMode>
   </BrowserRouter>

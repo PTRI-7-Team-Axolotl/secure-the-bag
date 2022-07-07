@@ -23,7 +23,7 @@ function Login() {
     })
       .then(response => {
         // response is the userId --> verifiedId
-        console.log('Successful Login request... Response --> ', response)
+        console.log('Successful Login request... UserId --> ', response)
         // let userId = response.data;
         // navigate to User dashboard on successful signup using verifiedId to display correct info in User --> 
         // navigate('/user', { replace: true });
