@@ -49,8 +49,7 @@ userController.saveJob = async (req, res, next) => {
     job_max_salary,
   } = req.body;
 
-  const user_id = 2;
-  res.locals.user = user_id;
+  const user_id = res.locals.user_id;
 
   const params = [
     employer_name,
@@ -77,11 +76,6 @@ userController.saveJob = async (req, res, next) => {
     user_id,
   ];
 
-  //where do we find user_id???
-
-  // WITH job AS (INSERT INTO jobs (employer_name, logo, website, job_publisher, employment_type, job_title, application_link, description, is_remote, job_posted_at, city, state, country, benefits, job_google_link, job_expiration, required_experience, required_skills, education, min_salary, max_salary ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21) RETURNING jobs.job_id )
-  // INSERT INTO users_jobs (user_id, job_id) SELECT $22, job_id FROM job RETURNING user_id
-
   const queryType =
     "WITH job AS (INSERT INTO jobs (employer_name, logo, website, job_publisher, employment_type, job_title, application_link, description, is_remote, job_posted_at, city, state, country, benefits, job_google_link, job_expiration, required_experience, required_skills, education, min_salary, max_salary ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21) RETURNING jobs.job_id )INSERT INTO users_jobs (user_id, job_id) SELECT $22, job_id FROM job RETURNING user_id";
 
@@ -99,8 +93,8 @@ userController.saveJob = async (req, res, next) => {
 
 userController.getAllJobs = async (req, res, next) => {
   try {
-    // retrieve from cookie later
-    const user_id = 1;
+
+    const user_id = res.locals.verified_id;
 
     // query for ALL of the job_id associated with the user (user_id)
     // get all the jobs that have that job_id
@@ -126,8 +120,9 @@ userController.getAllJobs = async (req, res, next) => {
 userController.getJob = async (req, res, next) => {
   try {
     // retrieve from cookie later
-    const user_id = 1;
-    const job_id = 2;
+    const user_id = res.locals.verified_id;
+    // see what comes in on the body
+    const job_id = req.params.id;
     // query for ALL of the job_id associated with the user (user_id)
     // get all the jobs that have that job_id
 
