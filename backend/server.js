@@ -3,7 +3,6 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const app = express();
 const path = require('path');
-// const cors = require('cors');
 const PORT = process.env.PORT;
 const userRouter = require('./routes/userRoutes');
 const authRouter = require('./routes/authRoutes');
@@ -15,7 +14,6 @@ console.log('im inside server.js!!')
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-// app.use(cors());
 
 // Don't serve static files or homepage from Dev Server
 if (process.env.NODE_ENV === 'production') {
@@ -27,14 +25,6 @@ if (process.env.NODE_ENV === 'production') {
   );
 };
 
-// app.use((req, res, next)=>{
-//     res.header('Access-Control-Allow-Headers, *, Access-Control-Allow-Origin', 'Origin, X-Requested-with, Content_Type,Accept,Authorization', 'http://localhost:3000');
-//     if (req.method === 'OPTIONS') {
-//         res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
-//         return res.status(200).json({});
-//     }
-//     next();
-// });
 
 // Routes
 app.use('/users', userRouter);

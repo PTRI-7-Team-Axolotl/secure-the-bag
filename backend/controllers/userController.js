@@ -36,8 +36,9 @@ userController.getJobs = async (req, res, next) => {
         }
       };
       
-      axios.request(options).then(function (response) {
-        res.locals.jobResults = response.data.data
+      await axios.request(options)
+        .then(function (response) {
+          res.locals.jobResults = response.data.data
           
           return next();
       }).catch(function (error) {

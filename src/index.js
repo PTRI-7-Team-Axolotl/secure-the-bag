@@ -6,6 +6,7 @@ import App from './App.jsx';
 import Login from './Login.jsx';
 import Signup from './Signup.jsx';
 import User from './User.jsx';
+import JobSwipe from './JobSwipe.jsx';
 // import JobInfo from './JobInfo.jsx';
 import { RequireAuth, AuthProvider } from './Auth.jsx';
 
@@ -19,15 +20,20 @@ root.render(
           <Route path='/' element={<App />} >
             <Route path='login' element={<Login />} />
             <Route path='signup' element={<Signup />} />
-            <Route 
-              path='user' 
+            <Route path='user' 
               element={
-              <RequireAuth>
-                <User />
-              </RequireAuth>
+                <RequireAuth>
+                  <User />
+                </RequireAuth>
               } 
               //  <Route path=':userId' element={<JobInfo />} />
             />
+            <Route path='job-swipe' 
+              element={
+                <RequireAuth>
+                  <JobSwipe />
+                </RequireAuth>
+              } />
             <Route
               path="*"
               element={
