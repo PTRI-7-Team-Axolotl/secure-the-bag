@@ -24,18 +24,28 @@ const styles = {
   },
 };
 
+// declare jobs globally because it seems like slideRenderer is called multiple times aka resets jobs to empty array if it's initialized inside of slideRenderer
+let jobs = [];
+
 function slideRenderer(params) {
   const { index, key } = params;
-  const jobs = [];
   let style;
 
+  const getJobs = async () => {
+    await axios.get('/api/getjobs')
+      .then(response => {
+        const data = response.data;
+        jobs = [...data];
+      })
+      .catch(err => console.log('Error in JobSwipe --> ', err));
+  }
+
   console.log('slide rendered');
-  // axios.get('/api/getjobs')
-  //   .then(response => {
-  //     console.log(response.data);
-  //     jobs = [...response.data];
-  //   })
-  //   .catch(err => console.log('Error in JobSwipe --> ', err));
+  if (jobs.length !== 0) console.log('you have a job');
+  else {
+    getJobs();
+    console.log('jobs array is empty', jobs);
+  }
 
   // for styling only
   switch (mod(index, 3)) {
@@ -55,9 +65,11 @@ function slideRenderer(params) {
       break;
   }
 
+
+  // first job slide is undefined at render/mount
   return (
     <div style={Object.assign({}, styles.slide, style)} key={key}>
-      {/* get job */}
+      {`Job: ${JSON.stringify(jobs[index + 1])}`}
       {`slide n°${index + 1}`}
     </div>
   );
@@ -83,8 +95,6 @@ function JobSwipe() {
     setIndex(index);
   }
 
-  // const handleClick = () => setIndex(49);
-
   return (
     <div>
       <VirtualizeSwipeableViews
@@ -95,15 +105,10 @@ function JobSwipe() {
         overscanSlideBefore={3}
         overscanSlideAfter={2}
       >
-        <div style={Object.assign({}, styles.slide, styles.slide1)}>
-          <p>Job 1</p>
-        </div>
-        <div style={Object.assign({}, styles.slide, styles.slide2)}>Job 2</div>
-        <div style={Object.assign({}, styles.slide, styles.slide3)}>Job 3</div>
+        <div style={Object.assign({}, styles.slide, styles.slide1)}></div>
+        <div style={Object.assign({}, styles.slide, styles.slide2)}></div>
+        <div style={Object.assign({}, styles.slide, styles.slide3)}></div>
       </VirtualizeSwipeableViews>
-      
-      {/* <br /> */}
-      {/* <button onClick={handleClick}>{'go to slide n°50'}</button> */}
     </div>
   );
 }
