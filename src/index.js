@@ -9,6 +9,7 @@ import User from './User.jsx';
 import JobSwipe from './JobSwipe.jsx';
 // import JobInfo from './JobInfo.jsx';
 import { RequireAuth, AuthProvider } from './Auth.jsx';
+import "./styles.css";
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
