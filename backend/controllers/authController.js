@@ -109,6 +109,7 @@ authController.createSession = async (req, res, next) => {
     const params = [token, user_id];
     if (token && user_id) {
       await db.query(query, params);
+      res.cookie('SID', token, {httpOnly: true});
     } else {
       next({
         log: 'Error in authController.createSession: no user/token',
@@ -127,10 +128,9 @@ authController.createSession = async (req, res, next) => {
 };
 
 authController.verifySession = async (req, res, next) => {
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
+  const token = req.cookies.SID;
   let user_id;
-  if (token == null) next({
+  if (!token) next({
     log: 'Error in authController.verifySession: No token',
     status: 401,
     message: 'No token'
@@ -140,6 +140,7 @@ authController.verifySession = async (req, res, next) => {
     console.log('Verified Token Info --> ', result);
     user_id = result.user_id;
   } catch (error) {
+    res.cookie('SID', 'invalid', {maxAge: 1});
     next({
       log: 'Error in authController.verifySession: token not valid',
       status: 403,
@@ -154,6 +155,7 @@ authController.verifySession = async (req, res, next) => {
       res.locals.user_id = user_id;
       next();
     } else {
+      res.cookie('SID', 'invalid', {maxAge: 1});
       next({
         log: 'Error in authController.verifySession: token does not match token in database',
         status: 403,
@@ -161,6 +163,7 @@ authController.verifySession = async (req, res, next) => {
       });
     }
   } catch (error) {
+    res.cookie('SID', 'invalid', {maxAge: 1});
     next({
       log: 'Error in authController.verifySession: token not in database',
       status: 403,
