@@ -16,9 +16,10 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
     <React.StrictMode>
-      <AuthProvider>
+      <App/>
+      {/* <AuthProvider>
        <Routes>
-        <Route path='/' element={<HomePage />} >
+        <Route exact path='/' element={<HomePage />} >
           <Route path='login' element={<Login />} />
           <Route path='signup' element={<Signup />} />
           <Route 
@@ -39,7 +40,7 @@ root.render(
           />
         </Route>
       </Routes>
-      </AuthProvider>
+      </AuthProvider> */}
     </React.StrictMode>
   </BrowserRouter>
 );

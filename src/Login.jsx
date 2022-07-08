@@ -45,7 +45,7 @@ function Login() {
         <input type="submit" value="Login"/>
       </form>
       <p style={styles.p}>New user?</p>
-      <Link to='/signup' element={Signup} style={{textAlign: 'center', margin: '0 auto', border: '1px red solid'}}>Sign up!</Link>
+      <Link to='/signup' element={Signup} style={{textAlign: 'center', margin: '0 auto'}}>Sign up!</Link>
   </div>
     
   );
@@ -54,7 +54,6 @@ function Login() {
 const styles = {
   container: {
     boxSizing: 'border-box',
-    border: '1px solid red',
     padding: '1em',
     margin: '0 auto'
   },

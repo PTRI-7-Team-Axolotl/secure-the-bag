@@ -42,7 +42,7 @@ function Signup() {
         <input type="submit" value="Sign up"/>
       </form>
       <p style={styles.p}>Already a user?</p>
-      <Link to='/login' element={Login} style={{textAlign: 'center', margin: '0 auto', border: '1px red solid'}}>Login</Link>
+      <Link to='/login' element={Login} style={{textAlign: 'center', margin: '0 auto'}}>Login</Link>
   </div>
     
   );
@@ -51,7 +51,6 @@ function Signup() {
 const styles = {
   container: {
     boxSizing: 'border-box',
-    border: '1px solid red',
     padding: '1em',
     margin: '0 auto'
   },

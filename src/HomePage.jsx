@@ -1,14 +1,21 @@
-import { urlencoded } from 'express';
+
 import React from 'react';
+import { Link, useNavigate, Outlet} from 'react-router-dom';
+
+import Signup from './Signup.jsx';
 
 
 
 function HomePage() {
 
     return (
-    <><div className="home-page" style={styles.container} ></div><h1 style={styles.h1}>Secure That Bag</h1></>)
-
-
+    <div className="home-page" style={styles.container}>
+        <h1 style={styles.h1}>Secure That Bag</h1>
+        <Link to="login" style={styles.form}>Login</Link>
+        <p style={styles.p} >New user?</p>
+        <Link to='signup' style={styles.form}>Sign up!</Link>
+      </div>
+      )
 }
 
 const styles = {  
@@ -28,7 +35,11 @@ const styles = {
     },
     h1: {
       margin: '1em auto',
-      textAlign: 'center'
+      textAlign: 'center',
+      font: "Bradley Hand, cursive"
+    },
+    p: {
+      textAlign: 'center',
     }
   };
   
