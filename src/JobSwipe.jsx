@@ -72,19 +72,20 @@ function slideRenderer(params) {
 
   return (
     <div style={Object.assign({}, styles.slide, style)} key={key}>
-      {!calledGetJobs ? <h2>{`Swipe for job listings -->`}</h2> : (
+      {!calledGetJobs || index < 0 ? <h2>{`Swipe for job listings -->`}</h2> : (
         <div>
-          <h3>{`Job Listing: #${index + 1}`}</h3>
+          {/* <h3>{`Job Listing: #${index}`}</h3> */}
           {/* <p>{`Job: ${JSON.stringify(jobs[index + 1])}`}</p> */}
-          {/* <p>{`Employer: ${jobs[index + 1].employer_name}`}</p>
-          <p>{`Job title: ${jobs[index + 1].job_title}`}</p>
-          <p>{`Date posted: ${jobs[index + 1].job_posted_at_datetime_utc.slice(0, 10)}`}</p>
-          <p>{`Job location: ${jobs[index + 1].job_city}, ${jobs[index].job_country}`}</p>
-          <p>{`Job description: ${jobs[index + 1].job_description}`}</p>
+          <h4>{`Employer: ${jobs[index].employer_name}`}</h4>
+          <p>{`Job title: ${jobs[index].job_title}`}</p>
+          <p>{`Job location: ${jobs[index].job_city}, ${jobs[index].job_country}`}</p>
+          <p>{`Job description:`}</p>
+          <p>{`${jobs[index].job_description}`}</p>
           <p>{`Employment type: ${jobs[index].job_employment_type}`}</p>
-          <p>{`${jobs[index].job_is_remote}` ? 'Remote opportunity' : 'In office'}</p> */}
+          <p>{`${jobs[index].job_is_remote}` ? 'Remote opportunity' : 'In office'}</p>
           {/* tags for job_required_education, job_required_experience & job_required_skills */}
-          <p>{`Link to application: ${jobs[index]}`}</p>
+          <p>{`Link to application: ${jobs[index].job_apply_link}`}</p>
+          <p>{`Date posted: ${jobs[index].job_posted_at_datetime_utc.slice(0, 10)}`}</p>
         </div>
       )}
     </div>
