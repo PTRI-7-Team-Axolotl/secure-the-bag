@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import SwipeableViews from "react-swipeable-views";
 import { virtualize, bindKeyboard } from "react-swipeable-views-utils";
 import { mod } from 'react-swipeable-views-core';
@@ -27,22 +27,30 @@ const styles = {
 // declare jobs globally because it seems like slideRenderer is called multiple times aka resets jobs to empty array if it's initialized inside of slideRenderer
 let jobs = [];
 let calledGetJobs = false;
+
 const getJobs = async () => {
   await axios.get('/api/getjobs')
     .then(response => {
       const data = response.data;
+      console.log('Response...', response)
       jobs = [...data];
       console.log('Called getJobs...')
     })
     .catch(err => console.log('Error in JobSwipe --> ', err));
   calledGetJobs = true;
+  console.log('Changed calledGetJobs status to...', calledGetJobs)
+  console.log('Gathered jobs...', jobs)
 }
-getJobs();
 
+// calls getJobs on loading App
+if (!calledGetJobs) getJobs();
+
+// virtual slide renderer
 function slideRenderer(params) {
   const { index, key } = params;
-  // let haveJobs = false;
   let style;
+  // having issues rendering jobs[index].property_name because index can be less than 0 --> making jobs@index undefined
+  console.log('Current index...', index, ' || ', jobs[index])
 
   // for styling slides only
   switch (mod(index, 3)) {
@@ -62,13 +70,12 @@ function slideRenderer(params) {
       break;
   }
 
-  // first job slide is currently undefined at render/mount
   return (
     <div style={Object.assign({}, styles.slide, style)} key={key}>
       {!calledGetJobs ? <h2>{`Swipe for job listings -->`}</h2> : (
         <div>
           <h3>{`Job Listing: #${index + 1}`}</h3>
-          <p>{`Job: ${JSON.stringify(jobs[index + 1])}`}</p>
+          {/* <p>{`Job: ${JSON.stringify(jobs[index + 1])}`}</p> */}
           {/* <p>{`Employer: ${jobs[index + 1].employer_name}`}</p>
           <p>{`Job title: ${jobs[index + 1].job_title}`}</p>
           <p>{`Date posted: ${jobs[index + 1].job_posted_at_datetime_utc.slice(0, 10)}`}</p>
@@ -77,13 +84,12 @@ function slideRenderer(params) {
           <p>{`Employment type: ${jobs[index].job_employment_type}`}</p>
           <p>{`${jobs[index].job_is_remote}` ? 'Remote opportunity' : 'In office'}</p> */}
           {/* tags for job_required_education, job_required_experience & job_required_skills */}
-          {/* <p>{`Link to application: ${jobs[index].apply_link}`}</p> */}
+          <p>{`Link to application: ${jobs[index]}`}</p>
         </div>
       )}
     </div>
   );
 }
-
 
 function JobSwipe() {
   const [index, setIndex] = useState(0);
@@ -91,20 +97,6 @@ function JobSwipe() {
   const handleChangeIndex = index => {
     setIndex(index);
   }
-
-  // useEffect(() => {
-  //   async function getJobs() {
-  //     await axios.get('/api/getjobs')
-  //       .then(response => {
-  //         const data = response.data;
-  //         // console.log(data);
-  //         jobs = [...data];
-  //         console.log(jobs)
-  //   })
-  //   .catch(err => console.log('Error in JobSwipe --> ', err));
-  //   }
-  //   getJobs();
-  // }, [])
 
   return (
     <div>
@@ -160,16 +152,4 @@ job_salary_currency: null
 job_salary_period: null
 job_state: "NY"
 job_title: "Senior NodeJS Developer"
-
-0: {employer_name: 'People Source Consulting', employer_logo: null, employer_website: 'http://www.peoplesource.co.uk', job_publisher: 'FOX2Now Jobs', job_id: 'NzlYo99V_h8AAAAAAAAAAA==', …}
-1: {employer_name: 'Everest Consultants, Inc.', employer_logo: null, employer_website: 'http://www.everestinc.com', job_publisher: 'WKRG Jobs', job_id: 'mK8x0MqlAUkAAAAAAAAAAA==', …}
-2: {employer_name: 'UtilizeCore.com', employer_logo: null, employer_website: null, job_publisher: 'LinkedIn', job_id: 'wIH0olWNbtYAAAAAAAAAAA==', …}
-3: {employer_name: 'EPAM Systems', employer_logo: 'https://www.epam.com/etc/designs/epam-core/images/common/logo.png', employer_website: 'http://www.epam.com', job_publisher: 'Built In NYC', job_id: 'hYppe88aLl4AAAAAAAAAAA==', …}
-4: {employer_name: 'RISE', employer_logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYsZQr7O-AaEm1z7yCme5SLAet6lWXBewwwWfj&s=0', employer_website: null, job_publisher: 'LinkedIn', job_id: 'xqF-_1l9IusAAAAAAAAAAA==', …}
-5: {employer_name: 'Technogen, Inc', employer_logo: null, employer_website: 'http://www.syscomtechinc.com', job_publisher: 'Techfetch', job_id: 'WdfTL-AfAWMAAAAAAAAAAA==', …}
-6: {employer_name: 'UtilizeCore', employer_logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFnO1gN_qRwcBNa6TUBkbXduFbypq9AO0Kjaqn&s=0', employer_website: null, job_publisher: 'Talent.com', job_id: 'LzKe-hXta3EAAAAAAAAAAA==', …}
-7: {employer_name: 'Insight Global', employer_logo: 'https://images.squarespace-cdn.com/content/5f7f984…7UPNH9S/IGLogoPublic.png?content-type=image%2Fpng', employer_website: 'http://www.insightglobal.com', job_publisher: 'WGN-TV Jobs', job_id: 'EV3HPVVjhLgAAAAAAAAAAA==', …}
-8: {employer_name: 'Datadog', employer_logo: 'https://i0.wp.com/cloudcow.com/wp-content/uploads/2019/12/datadog-logo.png?fit=600%2C175&ssl=1', employer_website: 'https://www.datadog.com', job_publisher: 'Datadog', job_id: 'Hu3qgRbN3HIAAAAAAAAAAA==', …}
-9: {employer_name: 'UtilizeCore', employer_logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMHHYtjtYc8Zlya_DF17MHbK05x0zJOlUQgJPu&s=0', employer_website: null, job_publisher: 'Glassdoor', job_id: 'SZ1bSq4FWYMAAAAAAAAAAA==', …}
-length: 10
 */
