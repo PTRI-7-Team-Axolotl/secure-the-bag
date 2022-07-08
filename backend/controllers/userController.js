@@ -94,18 +94,19 @@ userController.saveJob = async (req, res, next) => {
 userController.getAllJobs = async (req, res, next) => {
   try {
 
-    const user_id = res.locals.verified_id;
+    const user_id = res.locals.user_id;
+    console.log("this is userID :", user_id);
 
     // query for ALL of the job_id associated with the user (user_id)
     // get all the jobs that have that job_id
 
     const queryType =
-      "SELECT users_jobs.user_id, jobs.* FROM users_jobs INNER JOIN jobs ON users_jobs.job_id = jobs.job_id WHERE users_jobs.user_id = $1";
+      "SELECT uj.user_id, j.* FROM users_jobs uj RIGHT OUTER JOIN jobs j ON uj.job_id=j.job_id WHERE uj.user_id=$1";
     // returns an array full of objects that are the jobs
     const params = [user_id];
 
     const values = await db.query(queryType, params);
-
+    console.log("VALUES -> ", values)
     res.locals.values = values.rows;
     return next();
   } catch (err) {

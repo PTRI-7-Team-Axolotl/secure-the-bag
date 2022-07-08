@@ -13,7 +13,7 @@ router.get(
   "/getalljobs", authController.verifySession,
   userController.getAllJobs,
   (req, res) => {
-    console.log("attempting to get all jobs");
+    console.log("attempting to get all jobs", res.locals);
     return res.status(200).json(res.locals.values);
   }
 );

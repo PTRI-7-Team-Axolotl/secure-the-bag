@@ -23,9 +23,9 @@ root.render(
           <Route 
             path='user' 
             element={
-            //<RequireAuth>
+            <RequireAuth>
               <User />
-            //</RequireAuth>
+            </RequireAuth>
             } 
           />
           <Route
