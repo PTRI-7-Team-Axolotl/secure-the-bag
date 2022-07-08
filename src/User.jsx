@@ -1,13 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import JobCard from './userComponents/JobCard.jsx';
 import Colunms from './userComponents/Columns.jsx';
 import { data, statuses } from '../data/mock.js';
 import DropWrapper from './userComponents/DropWrapper.jsx';
+import axios from 'axios';
 
 
 function User (props) {
   //Data holds mockstate.  Once we use live data, we will need to set this to an empty array
-  const[jobs, setJobs] = useState(data)
+  const[jobs, setJobs] = useState([])
+
+  useEffect(() => {
+    axios.get('/getalljobs')
+    .then(response => {
+      setJobs([...jobs, response])
+    })
+  })
 
   //onDrop function. Update job item with new status
   const onDrop = (item, monitor, status) => {
@@ -16,7 +24,7 @@ function User (props) {
             .filter(i => i.id !== item.id)
             .concat({...item, status})
             return [...newItems];
-        });
+        })
     };
 
   //dragging function
