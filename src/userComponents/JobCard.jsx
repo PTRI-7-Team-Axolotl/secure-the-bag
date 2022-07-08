@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
-import ITEM_TYPE from "../data/types.js";
+import ITEM_TYPE from "../../data/types.js";
 import JobInfo from "./JobInfo.jsx";
 
 

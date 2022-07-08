@@ -1,38 +1,49 @@
 const data = [{
     id: 1,
-    icon: "⭕️",
     status: "open",
     title: "software engineer",
-    employer: "google"
+    employer: "google",
+    expiration: "June 23, 2022",  
+    application: 'wwww.apply here',
+    salary: '$150,000',
+    city:     "Denver",
+    remote:    'yes',
+    description: "put some words in here",
 }, {
     id: 2,
-    icon: "⭕️",
     status: "open",
     title: "software developer",
-    employer: "tesla"
+    employer: "tesla",
+    expiration: "June 23, 2022",  
+    application: 'wwww.apply here',
+    salary: '$150,000',
+    city:     "Denver",
+    remote:    'yes',
+    description: "put some words in here",
 }, {
     id: 3,
-    icon: "⭕️",
     status: "open",
     title: "blockchain engineer",
-    employer: "bank"
+    employer: "bank",
+    expiration: "June 23, 2022",  
+    application: 'wwww.apply here',
+    salary: '$150,000',
+    city:     "Denver",
+    remote:    'yes',
+    description: "put some words in here",
 }];
 
 const statuses = [{
     status: "open",
-    icon: "⭕️",
     color: "#EB5A46"
 }, {
     status: "applied",
-    icon: "🔆️",
     color: "#00C2E0"
 }, {
     status: "interview",
-    icon: "📝",
     color: "#C377E0"
 }, {
     status: "resolved",
-    icon: "✅",
     color: "#3981DE"
 }];
 
