@@ -10,12 +10,11 @@ function User (props) {
   //Data holds mockstate.  Once we use live data, we will need to set this to an empty array
   const[jobs, setJobs] = useState([])
 
-  useEffect(() => {
-    axios.get('/getalljobs')
-    .then(response => {
-      setJobs([...jobs, response])
+  useEffect(async () => {
+    await axios.get('/users/getalljobs')
+    .then(response => console.log (response))
     })
-  })
+
 
   //onDrop function. Update job item with new status
   const onDrop = (item, monitor, status) => {
