@@ -1,6 +1,6 @@
 import React, { useState, createContext, useContext } from "react";
 import { useLocation, Navigate } from "react-router-dom";
-import { fakeAuthProvider } from './fakeAuthProvider';
+import { authProvider } from './authProvider.js';
 
 // interface AuthContextType {
 //   user: any;
@@ -14,18 +14,15 @@ function AuthProvider({ children }) {
   let [user, setUser] = useState(null);
 
   let signin = (newUser, callback) => {
-    return fakeAuthProvider.signin(() => {
-      setUser(newUser);
-      callback();
-    });
+    setUser(newUser);
+    callback();
   };
 
   let signout = (callback) => {
-    return fakeAuthProvider.signout(() => {
-      setUser(null);
-      callback();
-    });
+    setUser(null);
+    callback();
   };
+
 
   let value = { user, signin, signout };
 
