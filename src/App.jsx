@@ -9,11 +9,11 @@ function App() {
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="App">
-        <p>this is inside app.js</p>
+        <p>Secure the Bag</p>
         <nav>
           <Link to="/login">Login</Link> |{" "}
           <Link to="/signup">Sign Up</Link> | {" "}
-          <Link to="/user">User</Link>
+          <Link to="/user">User</Link> | {" "}
         </nav>
         <Outlet />
       </div>
