@@ -9,10 +9,10 @@ function Login() {
 
   const { register, handleSubmit, formState: { errors } } = useForm();
   let navigate = useNavigate();
-  let location = useLocation();
+  // let location = useLocation();
   let auth = useAuth();
 
-  let from = location.state?.from?.pathname || '/';
+  // let from = location.state?.from?.pathname || '/';
 
   const onSubmit = async formData => {
     console.log('Login form data passed to back-end --> ', formData);
@@ -28,7 +28,7 @@ function Login() {
         // navigate to User dashboard on successful signup using verifiedId to display correct info in User --> 
         // navigate('/user', { replace: true });
         auth.signin(formData.email, () => {
-          navigate(from, { replace: true });
+          navigate('/user', { replace: true });
         })
       })
       .catch(err => console.log('Error in Login --> ', err));
