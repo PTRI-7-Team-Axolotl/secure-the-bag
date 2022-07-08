@@ -1,15 +1,19 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import Login from './Login.jsx';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
+import { useAuth } from './Auth.jsx';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 
 function Signup() {
-
+  let navigate = useNavigate();
+  // let location = useLocation();
+  let auth = useAuth();
   const { register, handleSubmit, formState: { errors } } = useForm();
 
   const onSubmit = async formData => {
+   
     console.log('Signup form data passed to back-end --> ', formData);
 
     await axios.post('/auth/signup', {
@@ -20,6 +24,9 @@ function Signup() {
         console.log('Successful Signup request... Response --> ', response)
         // let userId = response.data;
         // navigate to User page after successful signup
+        auth.signin(formData.email, () => {
+          navigate('/user', { replace: true });
+        })
       })
       .catch(err => console.log('Error in Signup --> ', err))
   }
