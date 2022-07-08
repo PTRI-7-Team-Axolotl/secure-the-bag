@@ -23,12 +23,10 @@ root.render(
           <Route 
             path='user' 
             element={
-            //<RequireAuth>
-              
+            <RequireAuth>
               <User />
-            //</RequireAuth>
+            </RequireAuth>
             } 
-            //  <Route path=':userId' element={<JobInfo />} />
           />
           <Route
             path="*"
