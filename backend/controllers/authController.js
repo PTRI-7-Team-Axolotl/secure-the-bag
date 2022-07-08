@@ -1,7 +1,9 @@
+require('dotenv').config();
 const db = require('../models/userModel');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const secret = process.env.JWT_SECRET;
 const saltFactor = parseInt(process.env.SALT_WORK_FACTOR);
-
 const authController = {};
 
 authController.encryptPassword = async (req, res, next) => {
@@ -49,7 +51,7 @@ authController.verifyUser = async (req, res, next) => {
           
           if (match) {
             console.log('User verified!!');
-            res.locals.verified_id = results.rows[0].user_id;
+            res.locals.user_id = results.rows[0].user_id;
             next();
           } else {
             console.log('match inside of verifyUser --> ', match)
@@ -87,6 +89,85 @@ authController.verifyUser = async (req, res, next) => {
       message: 'Please enter a valid email / password'
     });
   }
+};
+
+authController.createSession = async (req, res, next) => {
+  const user_id = res.locals.user_id;
+  let token;
+  try {
+    token = await jwt.sign({ user_id }, secret);
+    console.log('Token --> ', token);
+  } catch (error) {
+    next({
+      log: 'Error in authController.createSession: unable to sign token',
+      status: 500,
+      message: 'Unable to sign token'
+    })
+  }
+  try {
+    const query = 'UPDATE users SET token=$1 WHERE user_id=$2';
+    const params = [token, user_id];
+    if (token && user_id) {
+      await db.query(query, params);
+    } else {
+      next({
+        log: 'Error in authController.createSession: no user/token',
+        status: 400,
+        message: 'No user/token'
+      })
+    }
+  } catch (error) {
+    next({
+      log: 'Error in authController.createSession: could not write session to database',
+      status: 500,
+      message: 'Database Error'
+    })
+  }
+  next();
+};
+
+authController.verifySession = async (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  let user_id;
+  if (token == null) next({
+    log: 'Error in authController.verifySession: No token',
+    status: 401,
+    message: 'No token'
+  });
+  try {
+    const result = await jwt.verify(token, process.env.JWT_SECRET);
+    console.log('Verified Token Info --> ', result);
+    user_id = result.user_id;
+  } catch (error) {
+    next({
+      log: 'Error in authController.verifySession: token not valid',
+      status: 403,
+      message: 'Token invalid'
+    })
+  }
+  const query = 'SELECT token FROM users WHERE user_id=$1';
+  const params = [user_id];
+  try {
+    const data = await db.query(query, params);
+    if (data.rows[0].token === token) {
+      res.locals.user_id = user_id;
+      next();
+    } else {
+      next({
+        log: 'Error in authController.verifySession: token does not match token in database',
+        status: 403,
+        message: 'Session mismatch'
+      });
+    }
+  } catch (error) {
+    next({
+      log: 'Error in authController.verifySession: token not in database',
+      status: 403,
+      message: 'Invalid session'
+    })
+  }
+
 };
 
 module.exports = authController;
