@@ -26,28 +26,25 @@ const styles = {
 
 // declare jobs globally because it seems like slideRenderer is called multiple times aka resets jobs to empty array if it's initialized inside of slideRenderer
 let jobs = [];
+let calledGetJobs = false;
+const getJobs = async () => {
+  await axios.get('/api/getjobs')
+    .then(response => {
+      const data = response.data;
+      jobs = [...data];
+      console.log('Called getJobs...')
+    })
+    .catch(err => console.log('Error in JobSwipe --> ', err));
+  calledGetJobs = true;
+}
+getJobs();
 
 function slideRenderer(params) {
   const { index, key } = params;
+  // let haveJobs = false;
   let style;
 
-  const getJobs = async () => {
-    await axios.get('/api/getjobs')
-      .then(response => {
-        const data = response.data;
-        jobs = [...data];
-      })
-      .catch(err => console.log('Error in JobSwipe --> ', err));
-  }
-
-  console.log('slide rendered');
-  if (jobs.length !== 0) console.log('you have a job');
-  else {
-    getJobs();
-    console.log('jobs array is empty', jobs);
-  }
-
-  // for styling only
+  // for styling slides only
   switch (mod(index, 3)) {
     case 0:
       style = styles.slide1;
@@ -65,12 +62,24 @@ function slideRenderer(params) {
       break;
   }
 
-
-  // first job slide is undefined at render/mount
+  // first job slide is currently undefined at render/mount
   return (
     <div style={Object.assign({}, styles.slide, style)} key={key}>
-      {`Job: ${JSON.stringify(jobs[index + 1])}`}
-      {`slide n°${index + 1}`}
+      {!calledGetJobs ? <h2>{`Swipe for job listings -->`}</h2> : (
+        <div>
+          <h3>{`Job Listing: #${index + 1}`}</h3>
+          <p>{`Job: ${JSON.stringify(jobs[index + 1])}`}</p>
+          {/* <p>{`Employer: ${jobs[index + 1].employer_name}`}</p>
+          <p>{`Job title: ${jobs[index + 1].job_title}`}</p>
+          <p>{`Date posted: ${jobs[index + 1].job_posted_at_datetime_utc.slice(0, 10)}`}</p>
+          <p>{`Job location: ${jobs[index + 1].job_city}, ${jobs[index].job_country}`}</p>
+          <p>{`Job description: ${jobs[index + 1].job_description}`}</p>
+          <p>{`Employment type: ${jobs[index].job_employment_type}`}</p>
+          <p>{`${jobs[index].job_is_remote}` ? 'Remote opportunity' : 'In office'}</p> */}
+          {/* tags for job_required_education, job_required_experience & job_required_skills */}
+          {/* <p>{`Link to application: ${jobs[index].apply_link}`}</p> */}
+        </div>
+      )}
     </div>
   );
 }
@@ -78,22 +87,24 @@ function slideRenderer(params) {
 
 function JobSwipe() {
   const [index, setIndex] = useState(0);
-  // use useState to store array of jobs in
-  // const [ jobs, setJobs ] = useState([]);
-
-  // useEffect(() => {
-  //   axios.get('/api/getjobs')
-  //     .then(response => {
-  //       console.log(response.data);
-  //       setJobs(response.data);
-  //   })
-  //   .catch(err => console.log('Error in JobSwipe --> ', err));
-  // }, [])
 
   const handleChangeIndex = index => {
-    // console.log('jobs --> ', jobs)
     setIndex(index);
   }
+
+  // useEffect(() => {
+  //   async function getJobs() {
+  //     await axios.get('/api/getjobs')
+  //       .then(response => {
+  //         const data = response.data;
+  //         // console.log(data);
+  //         jobs = [...data];
+  //         console.log(jobs)
+  //   })
+  //   .catch(err => console.log('Error in JobSwipe --> ', err));
+  //   }
+  //   getJobs();
+  // }, [])
 
   return (
     <div>

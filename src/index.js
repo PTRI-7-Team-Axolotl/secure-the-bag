@@ -31,9 +31,9 @@ root.render(
             />
             <Route path='job-swipe' 
               element={
-                <RequireAuth>
+                // <RequireAuth>
                   <JobSwipe />
-                </RequireAuth>
+                // </RequireAuth>
               } />
             <Route
               path="*"

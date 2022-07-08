@@ -15,7 +15,7 @@ function Login() {
   let from = location.state?.from?.pathname || '/';
 
   const onSubmit = async formData => {
-    console.log('Login form data passed to back-end --> ', formData);
+    // console.log('Login form data passed to back-end --> ', formData);
 
     await axios.post('/auth/login', {
       email: formData.email,
@@ -31,7 +31,7 @@ function Login() {
           navigate(from, { replace: true });
         })
       })
-      .catch(err => console.log('Error in Login --> ', err));
+      .catch(err => console.log('Login error --> ', err));
   }
   console.log(errors);
   
@@ -47,7 +47,6 @@ function Login() {
       <p style={styles.p}>New user?</p>
       <Link to='/signup' element={Signup} style={{textAlign: 'center', margin: '0 auto', border: '1px red solid'}}>Sign up!</Link>
   </div>
-    
   );
 }
 
