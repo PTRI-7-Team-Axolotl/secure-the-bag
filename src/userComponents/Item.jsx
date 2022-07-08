@@ -1,6 +1,5 @@
 import React, { Fragment, useState, useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
-//import Window from "./Window.jsx";
 import ITEM_TYPE from "../../data/types.js";
 
 const Item = ({ item, index, moveItem, status }) => {
