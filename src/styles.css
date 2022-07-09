@@ -184,3 +184,14 @@ select {
 .close-btn:hover {
     background-color: #DCDCDC;
 }
+
+.job-description {
+    border: 1px, pink;
+    background-color: white;
+    height: 180px;
+    width: 675px;
+    overflow: auto;
+    float: left;
+    position: relative;
+    margin: 0;
+}

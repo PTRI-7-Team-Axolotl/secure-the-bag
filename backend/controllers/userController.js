@@ -145,4 +145,25 @@ userController.getJob = async (req, res, next) => {
   }
 };
 
+userController.updateStatus = async (req, res, next) => {
+  try{
+    
+    const queryType = 'UPDATE jobs SET status=$1 WHERE job_id=$2';
+    const { job_id, status } = req.body
+    // const user_id = res.locals.verified_id;
+    const params = [status, job_id];
+    res.locals.job = job_id;
+
+    await db.query(queryType, params);
+    return next()
+
+  } catch (err) {
+    next({
+      log: "Error in userController.updateStatus:  " + JSON.stringify(err),
+      status: 400,
+      message: "userController.updateStatus is causing an error",
+    });
+  }
+}
+
 module.exports = userController;
