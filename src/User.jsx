@@ -9,9 +9,10 @@ import JobSwipe from './JobSwipe.jsx';
 
 
 function User (props) {
-  //Data holds mockstate.  Once we use live data, we will need to set this to an empty array
+  
   const[jobs, setJobs] = useState([])
 
+  //Grabbing our data from the database
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -27,15 +28,21 @@ function User (props) {
   }, []);
 
 
-  //onDrop function. Update job item with new status
+  //onDrop function. Update job item with new status in database
   const onDrop = (item, monitor, status) => {
-    setJobs(prevState => {
-      const newItems = prevState
-        .filter(i => i.job_id !== item.job_id)
-        .concat({...item, status})
-        return [...newItems];
-    })
-  };
+    axios.post('/users/updatestatus', {
+              job_id: `${item.job_id}`,
+              status: `${status}`
+          }).then(response => console.log("axios post response", response))
+            .then(setJobs(prevState => {
+              const newItems = prevState
+                .filter(i => i.job_id !== item.job_id)
+                .concat({...item, status})
+                return [...newItems];
+            }))
+            .catch(function (error) {
+              console.log(error)});
+      };
 
   //dragging function
   const moveItem = ( dragIndex, hoverIndex) => {
@@ -48,17 +55,10 @@ function User (props) {
   };
 
 //rendering logic
-// if (jobs.length) {
-//   return (
-//       <div>
-//       {jobs[0].status}
-//        </div>
-//   )
-// } else return <div>Bye</div>
-
   if (jobs.length) {
     return (
       <>
+      {/* Link to the job-swipe page*/}
         <Link to='/job-swipe' element={JobSwipe} style={{textAlign: 'center', margin: '0 auto'}}>Job Swipe</Link>
         <div className={"row"}>
           {statuses.map(s => {
