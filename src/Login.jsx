@@ -9,24 +9,17 @@ function Login() {
 
   const { register, handleSubmit, formState: { errors } } = useForm();
   let navigate = useNavigate();
-  // let location = useLocation();
   let auth = useAuth();
 
-  // let from = location.state?.from?.pathname || '/';
-
   const onSubmit = async formData => {
-    // console.log('Login form data passed to back-end --> ', formData);
 
     await axios.post('/auth/login', {
       email: formData.email,
       password: formData.password
     })
       .then(response => {
-        // response is the userId --> verifiedId
-        console.log('Successful Login request... UserId --> ', response)
-        // let userId = response.data;
-        // navigate to User dashboard on successful signup using verifiedId to display correct info in User --> 
-        // navigate('/user', { replace: true });
+        console.log('Successful Login request... Response: ', response)
+
         auth.signin(formData.email, () => {
           navigate('/user', { replace: true });
         })
@@ -44,8 +37,11 @@ function Login() {
 
         <input type="submit" value="Login"/>
       </form>
-      <p style={styles.p}>New user?</p>
-      <Link to='/signup' element={Signup} style={{textAlign: 'center', margin: '0 auto'}}>Sign up!</Link>
+      <br></br>
+      <div style={styles.signup}>
+        <p style={styles.p}>New user?</p>
+        <Link to='/signup' element={Signup}>Sign up!</Link>
+      </div>
   </div>
   );
 }
@@ -53,8 +49,15 @@ function Login() {
 const styles = {
   container: {
     boxSizing: 'border-box',
+    border: '2px solid red',
+    borderRadius: '24px',
     padding: '1em',
-    margin: '0 auto'
+    margin: '1em auto',
+    background: '#fff',
+    minWidth: '33vw',
+    width: '50vw',
+    color: 'dark blue',
+    font: 'cascade script'
   },
   form: {
     display: 'flex',
@@ -68,6 +71,14 @@ const styles = {
   h1: {
     margin: '1em auto',
     textAlign: 'center'
+  },
+  p: {
+    textAlign: 'center', 
+    margin: '0 auto'
+  },
+  signup: {
+    display: 'flex',
+    justifyContent: 'center'
   }
 };
 

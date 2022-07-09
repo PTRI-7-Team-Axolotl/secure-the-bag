@@ -1,9 +1,9 @@
 const authProvider = {
   isAuthenticated: false,
-  signin(callback) {
+  signin() {
     authProvider.isAuthenticated = true;
   },
-  signout(callback) {
+  signout() {
     authProvider.isAuthenticated = false;
   },
 };
