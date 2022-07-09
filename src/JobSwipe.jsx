@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import SwipeableViews from "react-swipeable-views";
-import { virtualize, bindKeyboard } from "react-swipeable-views-utils";
+import { virtualize } from "react-swipeable-views-utils";
 import { mod } from 'react-swipeable-views-core';
 import axios from "axios";
   // mod: Extended version of % with negative integer support.
 // bindKeyboard not working the same as swiping with mouse --> will just carousel through 3 slides but still change the index
-const VirtualizeSwipeableViews = bindKeyboard(virtualize(SwipeableViews));
+const VirtualizeSwipeableViews = virtualize(SwipeableViews);
 
 const styles = {
   slide: {
@@ -24,13 +24,14 @@ const styles = {
   },
 };
 
-// declare jobs globally because it slideRenderer will reset array if called within
+// declared globally to work around slideRenderer's multiple calls and index update timing when React re-renders
 let jobs = [];
 let elTracker = 5;
 let calledGetJobs = false;
 
+
+// TO-DO: need to figure out how to get new jobs (currently grabbing the same 10 jobs everytime getJobs is called)
 const getJobs = async (leftSide) => {
-  // TO-DO: need to figure out how to get new jobs (currently grabbing the same 10 jobs everytime getJobs is called)
   console.log('Gathering jobs...')
   
   await axios.get('/api/getjobs')
@@ -106,7 +107,7 @@ function slideRenderer(params) {
 function JobSwipe() {
   const [index, setIndex] = useState(0);
 
-  const handleChangeIndex = newIndex => {
+  const handleChangeIndex = async newIndex => {
     let removedJob;
 
     if (newIndex < index) {
@@ -114,6 +115,31 @@ function JobSwipe() {
       removedJob = jobs.splice(elTracker, 1);
       elTracker -= 1;
       // TO-DO: call axios and add job to user jobs list
+      await axios.post('/users/savejob', {
+        employer_name: removedJob.employer_name,
+        employer_logo: removedJob.employer_logo,
+        employer_website: removedJob.employer_website,
+        job_publisher: removedJob.job_publisher,
+        job_employment_type: removedJob.job_employment_type,
+        job_title: removedJob.job_title,
+        job_apply_link: removedJob.job_apply_link,
+        job_description: removedJob.job_description,
+        job_is_remote: removedJob.job_is_remote,
+        job_posted_at_datetime_utc: removedJob.job_posted_at_datetime_utc,
+        job_city: removedJob.job_city,
+        job_state: removedJob.job_state,
+        job_country: removedJob.job_country,
+        job_benefits: removedJob.job_benefits,
+        job_google_link: removedJob.job_google_link,
+        job_offer_expiration_timestamp: removedJob.job_offer_expiration_timestamp,
+        job_required_experience: removedJob.job_required_experience,
+        job_required_skills: removedJob.job_required_skills,
+        job_required_education: removedJob.job_required_education,
+        job_min_salary: removedJob.job_min_salary,
+        job_max_salary: removedJob.job_max_salary,
+      })
+        .then(response => console.log('Successful swipe right! Response...', response))
+        .catch(err => console.log('Error in JobSwipe swipe right action...', err));
     } else if (newIndex > index) {
       console.log('Swiped left!');
       removedJob = jobs.splice(elTracker, 1);
@@ -149,7 +175,7 @@ function JobSwipe() {
 
 export default JobSwipe;
 
-/* 
+/* example job object at each array element:
 employer_logo: null
 employer_name: "People Source Consulting"
 employer_website: "http://www.peoplesource.co.uk"
