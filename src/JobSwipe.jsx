@@ -4,7 +4,7 @@ import { virtualize, bindKeyboard } from "react-swipeable-views-utils";
 import { mod } from 'react-swipeable-views-core';
 import axios from "axios";
   // mod: Extended version of % with negative integer support.
-
+// bindKeyboard not working the same as swiping with mouse --> will just carousel through 3 slides but still change the index
 const VirtualizeSwipeableViews = bindKeyboard(virtualize(SwipeableViews));
 
 const styles = {
@@ -24,16 +24,18 @@ const styles = {
   },
 };
 
-// declare jobs globally because it seems like slideRenderer is called multiple times aka resets jobs to empty array if it's initialized inside of slideRenderer
+// declare jobs globally because it seems like slideRenderer is called multiple times for slides before and after current slide 
+//  aka resets jobs to empty array if it's initialized inside of slideRenderer
 let jobs = [];
 let calledGetJobs = false;
 
 const getJobs = async () => {
+  // need to figure out how to get new jobs (currently grabbing the same 10 jobs everytime getJobs is called)
   await axios.get('/api/getjobs')
     .then(response => {
       const data = response.data;
       console.log('Response...', response)
-      jobs = [...data];
+      jobs.push(...data);
       console.log('Called getJobs...')
     })
     .catch(err => console.log('Error in JobSwipe --> ', err));
@@ -49,8 +51,9 @@ if (!calledGetJobs) getJobs();
 function slideRenderer(params) {
   const { index, key } = params;
   let style;
-  // having issues rendering jobs[index].property_name because index can be less than 0 --> making jobs@index undefined
-  console.log('Current index...', index, ' || ', jobs[index])
+  // having issues rendering jobs[index].property_name because index can be less than 0 or greater than jobs.length --> making jobs@index undefined
+  // solved below by adding conditionals in rendering each slide
+  // console.log('Current index...', index, ' || ', jobs[index])
 
   // for styling slides only
   switch (mod(index, 3)) {
@@ -72,16 +75,18 @@ function slideRenderer(params) {
 
   return (
     <div style={Object.assign({}, styles.slide, style)} key={key}>
-      {!calledGetJobs || index < 0 ? <h2>{`Swipe for job listings -->`}</h2> : (
+      {/* added conditionals to handle when accessing JobSwipe page before axios call finishes or when index outside scope of jobs array */}
+      {!calledGetJobs || index < 0 || index > jobs.length - 1 ? <h2 style={{textAlign: 'center'}}>{`Swipe for job listings`}</h2> : (
         <div>
           {/* <h3>{`Job Listing: #${index}`}</h3> */}
           {/* <p>{`Job: ${JSON.stringify(jobs[index + 1])}`}</p> */}
-          <h4>{`Employer: ${jobs[index].employer_name}`}</h4>
-          <p>{`Job title: ${jobs[index].job_title}`}</p>
+          <h3>{`Employer: ${jobs[index].employer_name}`}</h3>
+          <h4>{`Job title: ${jobs[index].job_title}`}</h4>
           <p>{`Job location: ${jobs[index].job_city}, ${jobs[index].job_country}`}</p>
           <p>{`Job description:`}</p>
           <p>{`${jobs[index].job_description}`}</p>
           <p>{`Employment type: ${jobs[index].job_employment_type}`}</p>
+          {/* Add job benefits */}
           <p>{`${jobs[index].job_is_remote}` ? 'Remote opportunity' : 'In office'}</p>
           {/* tags for job_required_education, job_required_experience & job_required_skills */}
           <p>{`Link to application: ${jobs[index].job_apply_link}`}</p>
@@ -93,11 +98,26 @@ function slideRenderer(params) {
 }
 
 function JobSwipe() {
-  const [index, setIndex] = useState(0);
+  // consider setting initial index equal to middle of jobs array
+  const [index, setIndex] = useState(jobs.length / 2);
 
-  const handleChangeIndex = index => {
-    setIndex(index);
-  }
+  const handleChangeIndex = newIndex => {
+    if (newIndex < index) {
+      console.log('Swiped right!');
+      // call axios and add job to user jobs list
+    } else if (newIndex > index) {
+      console.log('Swiped left!');
+    };
+    // remove jobs[index] from jobs array
+
+    setIndex(newIndex);
+    if (index === jobs.length - 1 || index === 0) {
+      console.log('Gathering jobs...')
+      getJobs();
+    } else if (index < 0) {
+      setIndex(jobs.length / 2);
+    };
+  };
 
   return (
     <div>
