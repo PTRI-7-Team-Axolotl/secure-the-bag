@@ -6,6 +6,7 @@ import App from './App.jsx';
 import Login from './Login.jsx';
 import Signup from './Signup.jsx';
 import User from './User.jsx';
+import HomePage from './HomePage.jsx'
 // import JobInfo from './JobInfo.jsx';
 import { RequireAuth, AuthProvider } from './Auth.jsx';
 import "./styles.css";
@@ -15,9 +16,10 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
     <React.StrictMode>
-      <AuthProvider>
+      <App/>
+      {/* <AuthProvider>
        <Routes>
-        <Route path='/' element={<App />} >
+        <Route exact path='/' element={<HomePage />} >
           <Route path='login' element={<Login />} />
           <Route path='signup' element={<Signup />} />
           <Route 
@@ -38,7 +40,7 @@ root.render(
           />
         </Route>
       </Routes>
-      </AuthProvider>
+      </AuthProvider> */}
     </React.StrictMode>
   </BrowserRouter>
 );

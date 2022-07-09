@@ -70,6 +70,7 @@ select {
     height: 40px;
 }
 
+
 .row {
     display: flex;
     flex-direction: row;
@@ -127,9 +128,9 @@ select {
 }
 
 .col {
-    min-height: 200px;
-    max-width: 200px;
-    width: 200px;
+    min-height: 2500px;
+    max-width: 2500px;
+    width: 250px;
 }
 
 .highlight-region {
