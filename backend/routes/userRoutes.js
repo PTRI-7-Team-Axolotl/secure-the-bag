@@ -27,5 +27,9 @@ router.post(
     return res.status(200).json(res.locals.user);
   }
 );
+router.post('/updatestatus', authController.verifySession, userController.updateStatus, (req, res) => {
+  console.log("updating status!");
+    return res.status(200).json(res.locals.job)
+})
 
 module.exports = router;

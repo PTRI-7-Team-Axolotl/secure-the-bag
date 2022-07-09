@@ -23,27 +23,29 @@ const JobInfo = ({ show, onClose, item }) => {
                 <form className = "job-details-wrapper" >
                     <div className="job-details-job"></div>
                     <label for="employer">Company: </label>
-                    <input type="text" {...register("employer")} defaultValue={item.employer_name} />
+                    <input type="text" size="100" {...register("employer")} defaultValue={item.employer_name} />
                     <label for="title">Job Title: </label>
-                     <input type="text" {...register("title")} defaultValue={item.job_title} />
+                     <input type="text" size="100" {...register("title")} defaultValue={item.job_title} />
                      <label for="expiration">Application Closes: </label>
-                     <input type="text" {...register("expiration")} defaultValue={item.job_offer_expiration_timestamp} />
+                     <input type="text" size="100" {...register("expiration")} defaultValue={item.job_expiration} />
                      <div className="job-details-job"></div>
                      <label for="application">Application Link: </label>
-                     <input type="text" {...register("application")} defaultValue={item.job_apply_link} />
+                     <input type="text" size="100" {...register("application")} defaultValue={item.application_link} />
                      <label for="salary">Max Salary: </label>
-                     <input type="text" {...register("salary")} defaultValue={item.job_max_salary} />
+                     <input type="text" size="100" {...register("salary")} defaultValue={item.max_salary} />
                      <label for="city">City: </label>
-                     <input type="text" {...register("city")} defaultValue={item.jobb_city} />
-                     <div className="job-details-job"></div>
-                     <label for="description">Job Description: </label>
-                     <input type="text" {...register("description")} defaultValue={item.description} />
+                     <input type="text" size="100" {...register("city")} defaultValue={item.city} />
                 </form>
+            </div>
+            <div >Job Description: </div>
+            <div className="job-description">
+            {item.description}
             </div>
             </div>
         </Modal>
     );
 };
+
 
 export default JobInfo;
 
