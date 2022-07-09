@@ -115,6 +115,7 @@ function JobSwipe() {
     if (newIndex < index) {
       console.log('Swiped right!');
       removedJob = jobs.splice(elTracker, 1);
+      removedJob = removedJob[0];
       elTracker -= 1;
       // TO-DO: call axios and add job to user jobs list
       await axios.post('/users/savejob', {

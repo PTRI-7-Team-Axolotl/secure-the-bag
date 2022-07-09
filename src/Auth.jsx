@@ -11,15 +11,22 @@ import { useLocation, Navigate } from "react-router-dom";
 let AuthContext = createContext({user: null});
 
 function AuthProvider({ children }) {
-  let [user, setUser] = useState(null);
+  let auth = useAuth();
+  let [user, setUser] = useState(auth.user);
 
   let signin = (newUser, callback) => {
+    console.log('signing in');
+    console.log(newUser)
     setUser(newUser);
+    console.log('User set --> ', user);
     callback();
   };
 
   let signout = (callback) => {
+    console.log('sigining out');
     setUser(null);
+    const now = new Date();
+    document.cookie = `SID=loggedOut;expires=${now.toUTCString()};`;
     callback();
   };
 
@@ -40,7 +47,7 @@ function useAuth() {
 function RequireAuth({ children }) {
   let auth = useAuth();
   let location = useLocation();
-
+  console.log('User --> ', auth.user);
   // if auth.user doesn't exist yet (aka not logged in), will Navigate to Login page
   if (!auth.user) {
     // Redirect them to the /login page, but save the current location they were

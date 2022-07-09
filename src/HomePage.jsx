@@ -1,13 +1,33 @@
 
 import React from 'react';
+import { useEffect } from 'react';
 import { Link, useNavigate, Outlet} from 'react-router-dom';
 import Signup from './Signup.jsx';
+import { useAuth } from "./Auth.jsx";
+import axios from 'axios';
 
 
 
 function HomePage() {
   const navigate = useNavigate();
+  const auth = useAuth();
 
+  useEffect(() => {
+    function checkSession() {
+      axios.get('/auth/landing')
+      .then(response => {
+        console.log(response);
+        if (response.status === 200) {
+          console.log('Already signed in');
+          auth.signin(response.data, () => navigate('/user', { replace: true }));
+        }
+      })
+      .catch(error => console.log(JSON.stringify(error)));
+    }
+
+    checkSession();
+
+  });
 
   return (
     <div className="home-page" style={styles.container}>

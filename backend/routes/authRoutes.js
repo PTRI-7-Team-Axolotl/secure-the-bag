@@ -14,6 +14,6 @@ router.post('/login', authController.verifyUser, authController.createSession,  
     return res.status(200).json(res.locals.verified_id)
 })
 
-router.get('/landing', authController.verifySession, (req, res) => res.status(200).json(res.locals.user_id))
+router.get('/landing', authController.verifySession, (req, res) => res.status(200).json(res.locals.email))
 
 module.exports = router;

@@ -129,7 +129,7 @@ authController.createSession = async (req, res, next) => {
 
 authController.verifySession = async (req, res, next) => {
   const token = req.cookies.SID;
-  let user_id, email;
+  let user_id;
   if (!token) next({
     log: 'Error in authController.verifySession: No token',
     status: 401,
@@ -138,7 +138,6 @@ authController.verifySession = async (req, res, next) => {
   try {
     const result = await jwt.verify(token, process.env.JWT_SECRET);
     console.log('Verified Token Info --> ', result);
-    email = result.email;
     user_id = result.user_id;
   } catch (error) {
     res.cookie('SID', 'invalid', {maxAge: 1});
@@ -153,7 +152,7 @@ authController.verifySession = async (req, res, next) => {
   try {
     const data = await db.query(query, params);
     if (data.rows[0].token === token) {
-      res.locals.email = email;
+      res.locals.email = data.rows[0].email;
       res.locals.user_id = user_id;
       next();
     } else {
