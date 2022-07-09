@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { Link } from 'react-router-dom';
 import SwipeableViews from "react-swipeable-views";
 import { virtualize } from "react-swipeable-views-utils";
 import { mod } from 'react-swipeable-views-core';
 import axios from "axios";
+import User from './User.jsx';
   // mod: Extended version of % with negative integer support.
-// bindKeyboard not working the same as swiping with mouse --> will just carousel through 3 slides but still change the index
+
 const VirtualizeSwipeableViews = virtualize(SwipeableViews);
 
 const styles = {
@@ -157,6 +159,7 @@ function JobSwipe() {
 
   return (
     <div>
+      <Link to='/user' element={User} style={{margin: '0 auto'}}>Job App Tracker Board</Link>
       <VirtualizeSwipeableViews
         index={index}
         onChangeIndex={handleChangeIndex}
