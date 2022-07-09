@@ -11,8 +11,11 @@ import HomePage from './HomePage.jsx'
 import Layout from './Layout.jsx';
 
 function App() {
+
+  
+
   return (
- <DndProvider backend={HTML5Backend}>
+  <DndProvider backend={HTML5Backend}>
     <AuthProvider>
     <Routes>
      <Route path='/' element={<Layout />}>

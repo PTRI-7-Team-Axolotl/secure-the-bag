@@ -1,6 +1,6 @@
 import React from "react";
 import axios from 'axios';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Signup from './Signup.jsx';
 import { useAuth } from './Auth.jsx';

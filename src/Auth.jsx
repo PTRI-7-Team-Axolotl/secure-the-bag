@@ -1,6 +1,5 @@
 import React, { useState, createContext, useContext } from "react";
 import { useLocation, Navigate } from "react-router-dom";
-import { authProvider } from './authProvider.js';
 
 // interface AuthContextType {
 //   user: any;

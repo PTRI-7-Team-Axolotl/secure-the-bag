@@ -1,21 +1,22 @@
 
 import React from 'react';
 import { Link, useNavigate, Outlet} from 'react-router-dom';
-
 import Signup from './Signup.jsx';
 
 
 
 function HomePage() {
+  const navigate = useNavigate();
 
-    return (
+
+  return (
     <div className="home-page" style={styles.container}>
-        <h1 style={styles.h1}>Secure That Bag</h1>
-        <Link to="login" style={styles.form}>Login</Link>
-        <p style={styles.p} >New user?</p>
-        <Link to='signup' style={styles.form}>Sign up!</Link>
-      </div>
-      )
+      <h1 style={styles.h1}>Secure That Bag</h1>
+      <Link to="login" style={styles.form}>Login</Link>
+      <p style={styles.p} >New user?</p>
+      <Link to='signup' style={styles.form}>Sign up!</Link>
+    </div>
+  )
 }
 
 const styles = {  

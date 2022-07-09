@@ -4,6 +4,7 @@ const router = express.Router();
 const authController = require('../controllers/authController')
 
 console.log('inside authRoutes.js')
+
 router.post('/signup', authController.encryptPassword, userController.signup, authController.createSession, (req, res) => {
     console.log('im inside auth Router!!')
     return res.status(200).json(res.locals.user_id)
@@ -12,5 +13,7 @@ router.post('/signup', authController.encryptPassword, userController.signup, au
 router.post('/login', authController.verifyUser, authController.createSession,  (req, res) => {
     return res.status(200).json(res.locals.verified_id)
 })
+
+router.get('/landing', authController.verifySession, (req, res) => res.status(200).json(res.locals.user_id))
 
 module.exports = router;

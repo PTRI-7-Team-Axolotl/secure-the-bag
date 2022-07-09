@@ -3,7 +3,7 @@ import Login from './Login.jsx';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useAuth } from './Auth.jsx';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 function Signup() {
