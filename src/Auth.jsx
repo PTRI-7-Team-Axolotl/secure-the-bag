@@ -8,6 +8,7 @@ import { authProvider } from './authProvider.js';
 //   signout: (callback: VoidFunction) => void;
 // }
 
+// generate default context
 let AuthContext = createContext({user: null});
 
 function AuthProvider({ children }) {
@@ -41,6 +42,7 @@ function RequireAuth({ children }) {
   let auth = useAuth();
   let location = useLocation();
 
+  // if auth.user doesn't exist yet (aka not logged in), will Navigate to Login page
   if (!auth.user) {
     // Redirect them to the /login page, but save the current location they were
     // trying to go to when they were redirected. This allows us to send them
@@ -49,7 +51,7 @@ function RequireAuth({ children }) {
     console.log('Login to view your user dashboard!');
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
-
+  // if auth.user exists, will return User page
   return children;
 }
 

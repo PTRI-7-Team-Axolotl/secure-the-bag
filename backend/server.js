@@ -14,7 +14,6 @@ console.log("im inside server.js!!");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-// app.use(cors());
 
 // Don't serve static files or homepage from Dev Server
 if (process.env.NODE_ENV === "production") {
