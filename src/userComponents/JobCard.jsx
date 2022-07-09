@@ -64,7 +64,9 @@ const JobCard = ({ item, index, moveItem, status, props }) => {
             onClick={onOpen}
             >
             <div className={"color-bar"} style={{ backgroundColor: status.color }}/>
-            <p className={"item-employer"} >{item.employer}</p>
+            <p className={"item-employer"}>{item.employer_name}</p>
+            <p className={"item-title"}>{item.job_title}</p>
+            <p className={"item-apply"}>{item.job_expiration}</p>
             </div>
             <JobInfo 
                 item={item}

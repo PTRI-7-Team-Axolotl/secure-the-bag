@@ -1,15 +1,19 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import Login from './Login.jsx';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
+import { useAuth } from './Auth.jsx';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 
 function Signup() {
-
+  let navigate = useNavigate();
+  // let location = useLocation();
+  let auth = useAuth();
   const { register, handleSubmit, formState: { errors } } = useForm();
 
   const onSubmit = async formData => {
+   
     console.log('Signup form data passed to back-end --> ', formData);
 
     await axios.post('/auth/signup', {
@@ -20,6 +24,9 @@ function Signup() {
         console.log('Successful Signup request... UserId --> ', response)
         // let userId = response.data;
         // navigate to User page after successful signup
+        auth.signin(formData.email, () => {
+          navigate('/user', { replace: true });
+        })
       })
       .catch(err => console.log('Error in Signup --> ', err))
   }
@@ -35,7 +42,7 @@ function Signup() {
         <input type="submit" value="Sign up"/>
       </form>
       <p style={styles.p}>Already a user?</p>
-      <Link to='/login' element={Login} style={{textAlign: 'center', margin: '0 auto', border: '1px red solid'}}>Login</Link>
+      <Link to='/login' element={Login} style={{textAlign: 'center', margin: '0 auto'}}>Login</Link>
   </div>
     
   );
@@ -44,7 +51,6 @@ function Signup() {
 const styles = {
   container: {
     boxSizing: 'border-box',
-    border: '1px solid red',
     padding: '1em',
     margin: '0 auto'
   },

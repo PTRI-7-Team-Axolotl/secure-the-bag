@@ -15,33 +15,31 @@ const JobInfo = ({ show, onClose, item }) => {
             overlayClassName={"overlay"}
         >
             <div className={"close-btn-ctn"}>
-                <h1 style={{ flex: "1 90%" }}>{item.title}</h1>
+                <h1 style={{ flex: "1 90%" }}>{item.job_title}</h1>
                 <button className="close-btn" onClick={onClose}>X</button>
             </div>
             <div>
             <div className="job-details">
                 <form className = "job-details-wrapper" >
-                    <div classNam="job-details-job"></div>
+                    <div className="job-details-job"></div>
                     <label for="employer">Company: </label>
-                    <input type="text" {...register("employer")} defaultValue={item.employer} />
+                    <input type="text" {...register("employer")} defaultValue={item.employer_name} />
                     <label for="title">Job Title: </label>
-                     <input type="text" {...register("title")} defaultValue={item.title} />
+                     <input type="text" {...register("title")} defaultValue={item.job_title} />
                      <label for="expiration">Application Closes: </label>
-                     <input type="text" {...register("expiration")} defaultValue={item.expiration} />
+                     <input type="text" {...register("expiration")} defaultValue={item.job_offer_expiration_timestamp} />
                      <div className="job-details-job"></div>
                      <label for="application">Application Link: </label>
-                     <input type="text" {...register("application")} defaultValue={item.application} />
+                     <input type="text" {...register("application")} defaultValue={item.job_apply_link} />
                      <label for="salary">Max Salary: </label>
-                     <input type="text" {...register("salary")} defaultValue={item.salary} />
+                     <input type="text" {...register("salary")} defaultValue={item.job_max_salary} />
                      <label for="city">City: </label>
-                     <input type="text" {...register("city")} defaultValue={item.city} />
+                     <input type="text" {...register("city")} defaultValue={item.jobb_city} />
                      <div className="job-details-job"></div>
                      <label for="description">Job Description: </label>
                      <input type="text" {...register("description")} defaultValue={item.description} />
                 </form>
             </div>
-                <h2>Status</h2>
-                <p>{`${item.status.charAt(0).toUpperCase()}${item.status.slice(1)}`}</p>
             </div>
         </Modal>
     );
