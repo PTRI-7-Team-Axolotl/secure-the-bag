@@ -106,7 +106,7 @@ userController.getAllJobs = async (req, res, next) => {
     const params = [user_id];
 
     const values = await db.query(queryType, params);
-    console.log("VALUES -> ", values)
+    // console.log("VALUES -> ", values)
     res.locals.values = values.rows;
     return next();
   } catch (err) {

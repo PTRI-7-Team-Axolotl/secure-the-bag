@@ -13,9 +13,12 @@ const VirtualizeSwipeableViews = virtualize(SwipeableViews);
 
 const styles = {
   slide: {
+    margin: '1em',
     padding: 15,
     minHeight: 100,
     color: '#fff',
+    border: '2px solid blue',
+    borderRadius: '24px'
   },
   slide1: {
     backgroundColor: '#FEA900',

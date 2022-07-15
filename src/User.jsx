@@ -88,7 +88,7 @@ function User (props) {
         </div>
       </>
     )
-  } else return <div>Loading</div>
+  } else return <div>Loading</div>  // when it's a new user (aka jobs.length === 0), stuck on rendering this page
 }
     
 export default User;
